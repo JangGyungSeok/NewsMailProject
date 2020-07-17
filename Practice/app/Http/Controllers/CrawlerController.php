@@ -8,11 +8,11 @@ use Goutte\Client;
 use App\NewsData;
 class CrawlerController extends Controller
 {
-    protected $news;
+    protected $news_data;
 
-    public function __construct(NewsData $news)
+    public function __construct(NewsData $news_data)
     {
-        $this->news = $news;
+        $this->news_data = $news_data;
     }
 
 
@@ -53,7 +53,8 @@ class CrawlerController extends Controller
 
 
             foreach($links as $link){
-                $this->news->insertNews($link);
+                // $this->news_data->insertNews($link);
+                print($link[0]);
             }
 
         }

@@ -18,4 +18,16 @@ class NewsData extends Model
         );
 
     }
+
+    public function getNews(){
+        // date("Y-m-d") 현재 날짜
+        // 현재기준 일주일 전
+        // print(date('Y-m-d',strtotime('-7 days')));
+
+        // 오늘 기준 일주일동안의 news select
+        return \App\NewsData::select('*')
+            ->where('news_date','>',date('Y-m-d',strtotime('-7 days')))
+            ->get();
+
+    }
 }
