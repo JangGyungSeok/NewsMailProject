@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use \App\NewsData;
 class MailSendController extends Controller
 {
+    protected $news_data;
+
+    public function __construct(NewsData $news_data)
+    {
+        $this->news_data = $news_data;
+    }
 
     // 메일발송 메서드 정의
     public function sendMail(){
@@ -32,7 +38,18 @@ class MailSendController extends Controller
         // print($response->getbody());
         // 방법 1 끝
 
-        // 방법 2 시작 -성공
+
+        // gateway page 제작 후 각 사용자를 판별해 다른 URL을 보낼 예정
+
+        // 메일 컨텐츠 동적생성 - 동작성공 (다듬기 미완성)
+        // 내용물 생성 완료! (일주일 이전 ~ 현재 기사를 DB에서 읽어옴)
+        $emailContent = '';
+        foreach($this->news_data->getNews() as $data){
+            $emailContent = $emailContent.$data->news_title.'<br>';
+        }
+
+
+        // 메일발송 API 방법 2 시작 -성공
         // 파라미터로 id관련 정보를 받아 메일을 보낼 예정이다.
         $mail_api_url = "http://crm3.saramin.co.kr/mail_api/automails";
         $client = new \GuzzleHttp\Client();
@@ -45,13 +62,10 @@ class MailSendController extends Controller
                         'sender_email'=>'JKS@saramin.co.kr',
                         'title' => 'test mail',
                         'use_event_solution'=>'y',
-                        'replace15' => 'CONTENT'
+                        'replace15' => $emailContent
                         ]]
                     );
-        // 방법 2 끝
-
-        print($response->getbody());
-
+        // // 방법 2 끝
 
 
     }
