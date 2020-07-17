@@ -53,7 +53,8 @@ class CrawlerController extends Controller
 
 
             foreach($links as $link){
-                $this->news->insertNews($link);
+                // $this->news->insertNews($link);
+                print($link[0]);
             }
 
         }

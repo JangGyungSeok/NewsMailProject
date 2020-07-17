@@ -17,3 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/abc','CrawlerController@crawlingNews');
+
+Route::get('/sendMail','MailSendController@sendMail');
