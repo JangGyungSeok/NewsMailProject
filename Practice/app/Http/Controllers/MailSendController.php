@@ -45,7 +45,8 @@ class MailSendController extends Controller
         // 내용물 생성 완료! (일주일 이전 ~ 현재 기사를 DB에서 읽어옴)
         $emailContent = '';
         foreach($this->news_data->getNews() as $data){
-            $emailContent = $emailContent.$data->news_title.'<br>';
+            // a태그 query로 redirect url과 사용자 idx, token 전달 (수신자 db정의, 수신자 정보 전달받은 이후 가능)
+            $emailContent =$emailContent.'<a href=http://172.18.128.1/gateway?url='.$data->news_url.' target=_blank> <h1>'.$data->news_title.'</h1></a><br>';
         }
 
 
