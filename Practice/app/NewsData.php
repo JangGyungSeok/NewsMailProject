@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\DB;
 class NewsData extends Model
 {
     public function insertNews($data){
-
-        return \App\NewsData::insert(
+        return NewsData::insert(
             [
                 'news_date' => $data[0],
                 'news_title' => $data[1],
@@ -25,7 +24,7 @@ class NewsData extends Model
         // print(date('Y-m-d',strtotime('-7 days')));
 
         // 오늘 기준 일주일동안의 news select
-        return \App\NewsData::select('*')
+        return NewsData::select('*')
             ->where('news_date','>',date('Y-m-d',strtotime('-7 days')))
             ->get();
 
