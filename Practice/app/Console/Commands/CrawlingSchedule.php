@@ -29,6 +29,7 @@ class CrawlingSchedule extends Command
      *
      * @return void
      */
+    // 의존성 주입
     public function __construct(CrawlerController $crawlerController)
     {
         parent::__construct();
@@ -40,6 +41,7 @@ class CrawlingSchedule extends Command
      *
      * @return int
      */
+    // 크롤링 메서드 실행
     public function handle()
     {
         Log::info('크롤링 스케줄 실행!');
