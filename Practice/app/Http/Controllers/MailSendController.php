@@ -5,17 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use \App\NewsData;
+use Illuminate\Support\Facades\Log;
+
 class MailSendController extends Controller
 {
     protected $news_data;
+
+
 
     public function __construct(NewsData $news_data)
     {
         $this->news_data = $news_data;
     }
 
+    public function test($data){
+        Log::info("테스트성공".$data);
+    }
+
     // 메일발송 메서드 정의
-    public function sendMail(){
+    public function sendMail($userData){
 
         // 방법 1 시작  -> 미작동
         // $mail_api_url = "http://crm3.saramin.co.kr/mail_api/automails";
@@ -60,7 +68,8 @@ class MailSendController extends Controller
                         'autotype'=>'A0188',
                         'cmpncode'=>'12031',
                         'email'=>'JKS@saramin.co.kr',
-                        'sender_email'=>'JKS@saramin.co.kr',
+                        // 'sender_email'=>'JKS@saramin.co.kr',
+                        'sender_email'=> $userData->email,
                         'title' => 'test mail',
                         'use_event_solution'=>'y',
                         'replace15' => $emailContent
@@ -68,6 +77,7 @@ class MailSendController extends Controller
                     );
         // // 방법 2 끝
 
+        return true;
 
     }
 }
