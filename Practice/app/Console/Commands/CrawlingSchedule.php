@@ -22,7 +22,7 @@ class CrawlingSchedule extends Command
      *
      * @var string
      */
-    protected $description = 'Crawling login start';
+    protected $description = 'Crawling logic start';
 
     /**
      * Create a new command instance.
@@ -44,7 +44,10 @@ class CrawlingSchedule extends Command
     // 크롤링 메서드 실행
     public function handle()
     {
-        Log::info('크롤링 스케줄 실행!');
-        return $this->crawlerController->crawlingNews();
+        Log::info('크롤링 스케줄 시작!');
+
+        $this->crawlerController->crawlingNews();
+
+        Log::info('크롤링 스케줄 끝!');
     }
 }

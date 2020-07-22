@@ -7,6 +7,7 @@ use \Snoopy;
 use Goutte\Client;
 use App\NewsData;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerController extends Controller
 {
@@ -20,69 +21,54 @@ class CrawlerController extends Controller
 
     public function crawlingNews(){
         $client = new Client();
-        // 'http://www.hkrecruit.co.kr/'
-        // $crawler = $client->submit(
-        //     $crawler->filter('#user-nav-wrapper > fieldset > form > button')->form(),
-        //     array('sc_word'=>'사람인')
-        // );
-
         $page = 1;
-        $this->count = 0;
-        // $isToday 로 변경할 예정
-        while($this->count < 10){
+        $count = 0;
+
+        while(true){
+            // http://www.hkrecruit.co.kr/news/articleList.html?page=1&total=593&box_idxno=&sc_area=A&view_type=sm&sc_word=%EC%82%AC%EB%9E%8C%EC%9D%B8
             $url = 'http://www.hkrecruit.co.kr/news/articleList.html?page='.(string)$page.'&total=593&box_idxno=&sc_area=A&view_type=sm&sc_word=%EC%82%AC%EB%9E%8C%EC%9D%B8';
-            // print($url);
             $crawler = $client->request('GET',$url);
-            $page++;
+            $links = $crawler
+                ->filter('#user-container > div.float-center.max-width-1080 > div.user-content > section > article > div.article-list > section > div.list-block');
 
+            foreach($links as $link){
+                if($count == 10) {
+                    return true;
+                }
+                $temp = new Crawler($link);
 
-            $links = $crawler->filter('#user-container > div.float-center.max-width-1080 > div.user-content > section > article > div.article-list > section > div.list-block')
-                ->each(function ($node, $page) {
-            // 날짜확인 로직 시작
-                    if ($this->count >=10){
+                // 크롤링할 기사 날짜 확인
+                $newsDate = explode("|", $temp->filter('div.list-dated')->text())[2];
+                $newsDate = explode(' ', $newsDate)[1];
+
+                // if($newsDate == date('Y-m-d')){
+                if($newsDate == '2020-07-15'){
+                    $count++;
+                    // 기사 제목, URL 크롤링
+                    $temp_title = $temp->filter('div.list-titles > a > strong')->text();
+                    $temp_url = 'http://www.hkrecruit.co.kr'.$temp->filter('div.list-titles > a')->attr('href');
+
+                    //DB 적재로직 실행
+                    $this->news_data->insertNews(
+                        array(
+                            $newsDate,
+                            $temp_title,
+                            $temp_url
+                        )
+                    );
+
+                } else {
+                    if ($count == 0) {
+                        // 오늘자 기사 없을 시 텔레그램 메시지
+                        return false;
+                    }
+                    else{
                         return true;
                     }
-
-                    $newsDate = explode("|", $node->filter('div.list-dated')->text())[2];
-                    $newsDate = explode(' ', $newsDate)[1];
-
-                    // 오늘 날짜와 비교하는 조건문
-                    // date("Y-m-d") -> 서버시간을 기준으로 문자열 생성
-                    if(date("Y-m-d") == $newsDate){
-                        Log::info('newsData insert 메서드 실행!');
-                        $this->count++;
-                        $this->news_data->insertNews(
-                            array(
-                                $newsDate
-                                ,$node->filter('div.list-titles > a > strong')->text()
-                                ,'http://www.hkrecruit.co.kr'.$node->filter('div.list-titles > a')->attr('href'),
-                            )
-                        );
-                            // return array($newsDate
-                        //     ,$node->filter('div.list-titles > a > strong')->text()
-                        //     ,'http://www.hkrecruit.co.kr'.$node->filter('div.list-titles > a')->attr('href'),
-                        //     );
-                    } else {
-                        if ($this->count > 0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                // 날짜확인 로직 끝
-
-                },['page' => $page]);
-
-
-            // foreach($links as $link){
-            //     // $this->news_data->insertNews($link);
-            //     print($link[0]);
-            // }
-
+                }
+            }
+            $page++;
         }
-
-        //테스트용 내용물 출력 (URL과 제목)
-
     }
 
 }
