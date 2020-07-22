@@ -21,3 +21,5 @@ Route::get('/abc','CrawlerController@crawlingNews');
 Route::get('/sendMail','MailSendController@sendMail');
 
 Route::get('/gateway','GatewayController@enterGateway');
+
+Route::get('/test','GatewayController@testGateway');
