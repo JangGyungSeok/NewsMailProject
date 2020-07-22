@@ -33,9 +33,18 @@ class NewsData extends Model
         $emailContent = '<h1> 사람인 관련 기사 </h1> <br>';
         // Model에 정의해둔 select 로직인 getNews() 메서드 사용
         foreach($this->getNews() as $data){
+            $query = http_build_query(
+                array(
+                    'url' => $data->news_url,
+                    'uid' => $uid,
+                    'mailDate' => date('Y-m-d')
+                )
+                , '&amp'
+            );
+
             dump($data);
             // a태그 query로 redirect url과 사용자 idx, token 전달 (수신자 db정의, 수신자 정보 전달받은 이후 가능)
-            $emailContent =$emailContent.'<a href=http://172.18.128.1/gateway?url='.$data->news_url.' target=_blank> <h1>'.$data->news_title.'</h1></a><br>';
+            $emailContent =$emailContent.'<a href=http://172.18.128.1/gateway?'.$query.' target=_blank> <h1>'.$data->news_title.'</h1></a><br>';
         }
         dump($emailContent);
 

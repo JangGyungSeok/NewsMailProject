@@ -43,7 +43,7 @@ class CrawlerController extends Controller
                 $newsDate = explode(' ', $newsDate)[1];
 
                 // if($newsDate == date('Y-m-d')){
-                if($newsDate == '2020-07-15'){
+                if($newsDate == date('Y-m-d')){
                     $count++;
                     // 기사 제목, URL 크롤링
                     $temp_title = $temp->filter('div.list-titles > a > strong')->text();

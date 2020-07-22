@@ -15,7 +15,7 @@ class CreateReceiveTimeLogsTable extends Migration
     {
         Schema::create('receive_time_logs', function (Blueprint $table) {
             $table->id('idx');
-            $table->char('token',200);
+            $table->char('uid',10);
             $table->date('mail_date');
             $table->dateTime('enter_time');
         });

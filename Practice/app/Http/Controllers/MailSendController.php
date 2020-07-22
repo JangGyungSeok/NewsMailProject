@@ -44,7 +44,7 @@ class MailSendController extends Controller
                     'email'=>$userData->email,
                     'sender_email'=> $userData->email,
                     // 사용자 이름이 필요할 것으로 생각됨
-                    'title' => 'test mail',
+                    'title' => $userData->name.'님 '.date("Y-m-d").' 사람인 관련 기사입니다.',
                     'use_event_solution'=>'y',
                     'replace15' => $emailContent
                     ]

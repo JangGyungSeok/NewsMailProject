@@ -13,12 +13,12 @@ class ReceiveTimeLog extends Model
     }
 
 
-    public function insertLog($uid){
+    public function insertLog($uid,$mailDate){
         return ReceiveTimeLog::insert(
             [
                 //uid로 변경예정
-                'token' => $uid,
-                'mail_date' => date('Y-m-d'),
+                'uid' => $uid,
+                'mail_date' => $mailDate,
                 'enter_time' => date('Y-m-d h:i:s')
             ]
         );

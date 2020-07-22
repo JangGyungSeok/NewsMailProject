@@ -18,7 +18,7 @@ class MailSendLog extends Model
         return MailSendLog::insert(
             [
                 'send_time' => date('Y-m-d h:i:s'),
-                'token' => $uid,
+                'uid' => $uid,
                 'is_success' => $isSuccess
             ]
         );
