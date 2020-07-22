@@ -3,13 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class NewsData extends Model
 {
     public function insertNews($data){
-
-        return \App\NewsData::insert(
+        return NewsData::insert(
             [
                 'news_date' => $data[0],
                 'news_title' => $data[1],
@@ -25,9 +23,22 @@ class NewsData extends Model
         // print(date('Y-m-d',strtotime('-7 days')));
 
         // 오늘 기준 일주일동안의 news select
-        return \App\NewsData::select('*')
-            ->where('news_date','>',date('Y-m-d',strtotime('-7 days')))
+        return NewsData::select('*')
+            ->where('news_date','>',date('Y-m-d',strtotime('-20 days')))
             ->get();
 
+    }
+
+    public function getMailContent($uid){
+        $emailContent = '<h1> 사람인 관련 기사 </h1> <br>';
+        // Model에 정의해둔 select 로직인 getNews() 메서드 사용
+        foreach($this->getNews() as $data){
+            dump($data);
+            // a태그 query로 redirect url과 사용자 idx, token 전달 (수신자 db정의, 수신자 정보 전달받은 이후 가능)
+            $emailContent =$emailContent.'<a href=http://172.18.128.1/gateway?url='.$data->news_url.' target=_blank> <h1>'.$data->news_title.'</h1></a><br>';
+        }
+        dump($emailContent);
+
+        return $emailContent;
     }
 }

@@ -2,71 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\MailSendLog;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use \App\NewsData;
+use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\Types\Boolean;
+use \GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+
 class MailSendController extends Controller
 {
-    protected $news_data;
+    private $newsData;
+    private $mailSendLog;
 
-    public function __construct(NewsData $news_data)
+
+
+    public function __construct(NewsData $newsData, MailSendLog $mailSendLog)
     {
-        $this->news_data = $news_data;
+        $this->newsData = $newsData;
+        $this->mailSendLog = $mailSendLog;
     }
 
     // 메일발송 메서드 정의
-    public function sendMail(){
-
-        // 방법 1 시작  -> 미작동
-        // $mail_api_url = "http://crm3.saramin.co.kr/mail_api/automails";
-        // $client = new \GuzzleHttp\Client();
-        // $response = $client->request("POST",
-        //     $mail_api_url,
-        //         Request::json(
-        //         [
-        //             'autotype'=>'A0188',
-        //             'cmpncode'=>'12031',
-        //             'email'=>'JKS@saramin.co.kr',
-        //             'sender_email'=>'JKS@saramin.co.kr',
-        //             'title' => 'test mail',
-        //             'use_event_solution'=>'y',
-        //             'replace15' => 'CONTENT'
-        //         ]
-        //         )
-        // );
-        // print($response->getStatusCode());
-        // print($response->getbody());
-        // 방법 1 끝
-
-
-        // gateway page 제작 후 각 사용자를 판별해 다른 URL을 보낼 예정
+    public function sendMail($userData){
 
         // 메일 컨텐츠 동적생성 - 동작성공 (다듬기 미완성)
         // 내용물 생성 완료! (일주일 이전 ~ 현재 기사를 DB에서 읽어옴)
-        $emailContent = '';
-        foreach($this->news_data->getNews() as $data){
-            $emailContent = $emailContent.$data->news_title.'<br>';
-        }
+        Log::info('메일발송 API 실행',['수신자 uid' => $userData->idx]);
+        $emailContent = $this->newsData->getMailContent($userData->idx);
 
-
-        // 메일발송 API 방법 2 시작 -성공
-        // 파라미터로 id관련 정보를 받아 메일을 보낼 예정이다.
+        // 메일발송 API 사용
         $mail_api_url = "http://crm3.saramin.co.kr/mail_api/automails";
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post($mail_api_url,
-                        ['form_params'=>
-                        [
-                        'autotype'=>'A0188',
-                        'cmpncode'=>'12031',
-                        'email'=>'JKS@saramin.co.kr',
-                        'sender_email'=>'JKS@saramin.co.kr',
-                        'title' => 'test mail',
-                        'use_event_solution'=>'y',
-                        'replace15' => $emailContent
-                        ]]
-                    );
-        // // 방법 2 끝
-
-
+        $client = new Client;
+        $response = $client->post(
+            $mail_api_url,
+            [
+                'form_params'=>
+                    [
+                    'autotype'=>'A0188',
+                    'cmpncode'=>'12031',
+                    'email'=>$userData->email,
+                    'sender_email'=> $userData->email,
+                    // 사용자 이름이 필요할 것으로 생각됨
+                    'title' => 'test mail',
+                    'use_event_solution'=>'y',
+                    'replace15' => $emailContent
+                    ]
+            ]
+        );
+        return $response->getStatusCode();
     }
 }
