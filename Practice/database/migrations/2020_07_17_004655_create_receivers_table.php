@@ -16,8 +16,8 @@ class CreateReceiversTable extends Migration
         Schema::create('receivers', function (Blueprint $table) {
             $table->id('idx');
             $table->char('email',100);
+            $table->char('name',20);
             $table->char('token',200);
-            $table->dateTime('send_resevation_time');
         });
     }
 

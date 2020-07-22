@@ -19,4 +19,14 @@ class Receiver extends Model
     public function getReceiver(){
 
     }
+    public function isReceiver($uid){// $token){
+        if (Receiver::select('*')->where('idx','=',$uid)->exists()){//->where('token','=','$token')->get()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getFavoriteTime(){
+        return Receiver::select('*')->get();
+    }
 }
