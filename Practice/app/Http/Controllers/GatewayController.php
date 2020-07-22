@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use \App\ReceiveTimeLog;
 use \App\Receiver;
+use \App\Telegram;
 
 class GatewayController extends Controller
 {
@@ -42,6 +43,7 @@ class GatewayController extends Controller
     }
 
     public function testGateway(){
-        // return $this->receiver->isReceiver(1);
+        $temp = new Telegram;
+        return $temp->testMessage();
     }
 }
