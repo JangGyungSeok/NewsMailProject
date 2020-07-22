@@ -35,11 +35,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // 09:00 크롤링 메서드 실행
-        $schedule->command('command:CrawlingSchedule')->at('09:00');
+        // $schedule->command('command:CrawlingSchedule')->at(date('H:i'));//at('09:00');
 
         // 최신 방법 시작
         // DB 값을 참조 (메일 스케줄 시간 및 수신자 정보)
         $userData = DB::table('Receivers')->select('*')->get();
+        // dump($userData);
         for($i=0; $i<sizeof($userData);$i++){
             // 수신자별 메일수신 선호시간에 맞춰 스케줄링
             $schedule
@@ -48,11 +49,12 @@ class Kernel extends ConsoleKernel
                     ,[
                         $userData[$i]->idx
                         ,$userData[$i]->email
+                        ,$userData[$i]->name
                         ,$userData[$i]->token
-                        ,$userData[$i]->send_reservation_time
                     ]
                 )
-                ->at(date('h:i'));
+                ->at(date('H:i'));
+                // dump(date('H:i'));
                 // ->at(substr($userData[$i]->send_reservation_time,0,5));
         }
 

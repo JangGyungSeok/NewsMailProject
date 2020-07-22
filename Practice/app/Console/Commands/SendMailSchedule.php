@@ -18,7 +18,7 @@ class SendMailSchedule extends Command
      * @var string
      */
     // command명과 필요한 parameters 정의
-    protected $signature = 'command:SendMailSchedule {idx} {email} {token} {send_resevation_time}';
+    protected $signature = 'command:SendMailSchedule {idx} {email} {name} {token}';
 
     /**
      * The console command description.
@@ -50,8 +50,8 @@ class SendMailSchedule extends Command
         // 파라미터로 넘어온 data들을 object형태로 변환
         $userData =(object) ['idx' => $this->argument('idx')
                 ,'email' => $this->argument('email')
+                ,'name' => $this->argument('name')
                 ,'token' => $this->argument('token')
-                ,'send_reservation_time' => $this->argument('send_reservation_time')
         ];
 
         // Log::info($userData);
