@@ -60,6 +60,7 @@ class SendMailSchedule extends Command
         // }
         Log::info('메일발송 스케줄 실행!');
         // 의존성주입으로 선언한 Controller를 사용해 메일발송로직 실행
-        return $this->mailSendController->sendMail($userData);
+        $this->mailSendController->sendMail($userData);
+        Log::info('메일발송 스케줄 종료');
     }
 }

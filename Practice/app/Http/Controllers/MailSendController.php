@@ -28,6 +28,7 @@ class MailSendController extends Controller
 
         // 메일 컨텐츠 동적생성 - 동작성공 (다듬기 미완성)
         // 내용물 생성 완료! (일주일 이전 ~ 현재 기사를 DB에서 읽어옴)
+        Log::info('메일발송 API 실행',['수신자 uid' => $userData->idx]);
         $emailContent = $this->newsData->getMailContent($userData->idx);
 
         // 메일발송 API 사용
@@ -49,7 +50,6 @@ class MailSendController extends Controller
                     ]
             ]
         );
-        dump($response->getStatusCode());
         return $response->getStatusCode();
     }
 }

@@ -29,9 +29,10 @@ class GatewayController extends Controller
         // 수신자별 접근시간 적재로직 실행
 
         // Receiver Model의 메서드 사용 uid존재여부 확인
+        Log::info('사용자 메일 접근');
         if ($this->receiver->isReceiver($request -> query('uid'))) {
-
             // 메일 접근 로그 적재 실행
+            Log::info('접근 유저 정보',['id'=>$request -> query('uid')]);
             $this->receiveTimeLog->insertLog($request -> query('uid'));
             return Redirect($request -> query('url'));
         } else{

@@ -33,7 +33,8 @@ class CrawlerController extends Controller
 
             foreach($links as $link){
                 if($count == 10) {
-                    return true;
+                        Log::info('10개의 기사 크롤링 완료');
+                        return true;
                 }
                 $temp = new Crawler($link);
 
@@ -60,9 +61,11 @@ class CrawlerController extends Controller
                 } else {
                     if ($count == 0) {
                         // 오늘자 기사 없을 시 텔레그램 메시지
+                        Log::info('크롤링 할 기사 없음');
                         return false;
                     }
                     else{
+                        Log::info((string)$count.'개의 기사 크롤링 완료');
                         return true;
                     }
                 }
