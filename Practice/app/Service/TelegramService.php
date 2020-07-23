@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Service;
 
 use \GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 define('BOT_TOKEN',env('TELEGRAM_BOT_TOKEN'));
 define('API_URL','http://api.telegram.org/bot'.BOT_TOKEN.'/');
 
-class Telegram
+class TelegramService
 {
     public function testMessage(){
         $client = new Client(['base_uri'=>API_URL,'verify' => false]);
