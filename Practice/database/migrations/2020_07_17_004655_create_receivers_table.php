@@ -18,6 +18,7 @@ class CreateReceiversTable extends Migration
             $table->char('email',100);
             $table->char('name',20);
             $table->char('token',200);
+            $table->time('send_reservation_time');
         });
     }
 
