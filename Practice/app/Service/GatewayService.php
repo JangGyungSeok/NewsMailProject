@@ -35,6 +35,7 @@ class GatewayService
             // 메일 접근 로그 적재 실행
             Log::info('접근 유저 정보',['id'=>$request -> query('uid')]);
             $this->receiveTimeLog->insertLog($request -> query('uid'),$request -> query('mailDate'));
+
             return Redirect($request -> query('url'));
         } else{
             return '사용자가 아닙니다.';
