@@ -16,7 +16,7 @@ class CreateMailSendLogsTable extends Migration
         Schema::create('mail_send_logs', function (Blueprint $table) {
             $table->id('idx');
             $table->dateTime('send_time');
-            $table->char('token',200);
+            $table->char('uid',10);
             $table->boolean('is_success');
         });
     }
