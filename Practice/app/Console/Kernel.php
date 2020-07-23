@@ -6,6 +6,7 @@ use \App\Receiver;
 use \App\Console\Commands;
 use App\Console\Commands\CrawlingSchedule;
 use App\Console\Commands\SendMailSchedule;
+use App\NewsData;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
@@ -40,24 +41,28 @@ class Kernel extends ConsoleKernel
         // 최신 방법 시작
         // DB 값을 참조 (메일 스케줄 시간 및 수신자 정보)
         // 이전날 기사가 있을경우
-        $userData = DB::table('Receivers')->select('*')->get();
-        // dump($userData);
-        for($i=0; $i<sizeof($userData);$i++){
-            // 수신자별 메일수신 선호시간에 맞춰 스케줄링
-            $schedule
-                ->command(
-                    'command:SendMailSchedule'
-                    ,[
-                        $userData[$i]->idx
-                        ,$userData[$i]->email
-                        ,$userData[$i]->name
-                        ,$userData[$i]->token
-                    ]
-                )
-                ->at(date('H:i'));
-                // dump(date('H:i'));
-                // ->at(substr($userData[$i]->send_reservation_time,0,5));
+        $NewsData = NewsData::select('*')->where('news_date',date('Y-m-d'))->get();
+        if (!$NewsData->isEmpty()){
+            $userData = DB::table('Receivers')->select('*')->get();
+            // dump($userData->isEmpty());
+            for($i=0; $i<sizeof($userData);$i++){
+                // 수신자별 메일수신 선호시간에 맞춰 스케줄링
+                $schedule
+                    ->command(
+                        'command:SendMailSchedule'
+                        ,[
+                            $userData[$i]->idx
+                            ,$userData[$i]->email
+                            ,$userData[$i]->name
+                            ,$userData[$i]->token
+                        ]
+                    )
+                    ->at(date('H:i'));
+                    // dump(date('H:i'));
+                    // ->at(substr($userData[$i]->send_reservation_time,0,5));
+            }
         }
+
 
         // 최신 방법 끝
 

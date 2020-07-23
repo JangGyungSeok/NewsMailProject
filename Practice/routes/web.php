@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'DashBoardController@test');
+Route::get('/MailLog', 'DashBoardController@test');
+Route::get('/ReceiveLog', 'DashBoardController@test');
 Route::get('/abc','CrawlerController@crawlingNews');
 
 Route::get('/sendMail','MailSendController@sendMail');
