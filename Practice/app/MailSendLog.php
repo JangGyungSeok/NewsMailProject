@@ -2,25 +2,14 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MailSendLog extends Model
 {
-    public function insertMailSentLog(){
-
-    }
-
     public function receiver(){
         return $this->belongTo('App\Receiver','foreign_key','token');
-    }
-
-    public function insertLog($uid, $isSuccess){
-        return MailSendLog::insert(
-            [
-                'send_time' => date('Y-m-d h:i:s'),
-                'uid' => $uid,
-                'is_success' => $isSuccess
-            ]
-        );
     }
 }

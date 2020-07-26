@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use \App\NewsData;
+use App\Repository\NewsDataRepository;
 use Goutte\Client;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\DomCrawler\Crawler;
@@ -10,11 +10,11 @@ use Symfony\Component\HttpClient\Exception\TransportException;
 
 class CrawlerService
 {
-    private $newsData;
+    private $newsDataRepository;
 
-    public function __construct(NewsData $newsData)
+    public function __construct(NewsDataRepository $newsDataRepository)
     {
-        $this->newsData = $newsData;
+        $this->newsDataRepository = $newsDataRepository;
     }
 
     public function CrawlingNews(){
@@ -31,9 +31,13 @@ class CrawlerService
 
                 $links = $crawler
                     ->filter('#user-container > div.float-center.max-width-1080 > div.user-content > section > article > div.article-list > section > div.list-block');
+                if ($links->text() == null){
+                    Log::info('여기들어옴');
+                    return 'NoContent';
+                }
 
                 foreach($links as $link){
-                    if($count == 10) {
+                    if($count == 100) {
                             Log::info('10개의 기사 크롤링 완료');
                             return 'Success';
                     }
@@ -43,8 +47,7 @@ class CrawlerService
                     $newsDate = explode("|", $temp->filter('div.list-dated')->text())[2];
                     $newsDate = explode(' ', $newsDate)[1];
 
-                    // if($newsDate == date('Y-m-d')){
-                    if($newsDate == date('Y-m-d')){
+                    if( strtotime($newsDate) == strtotime(date('Y-m-d', strtotime('-1 days'))) ){
                         $count++;
                         // 기사 제목, URL 크롤링
                         $temp_title = $temp->filter('div.list-titles > a > strong')->text();
@@ -52,7 +55,7 @@ class CrawlerService
 
                         //DB 적재로직 실행
 
-                        $this->newsData->insertNews(
+                        $this->newsDataRepository->insertNews(
                             array(
                                 $newsDate,
                                 $temp_title,
@@ -60,7 +63,10 @@ class CrawlerService
                             )
                         );
 
-                    } else {
+                    } elseif (strtotime($newsDate) >= strtotime(date('Y-m-d'))) {
+                        continue;
+                    }
+                    else {
                         if ($count == 0) {
                             // 오늘자 기사 없을 시 텔레그램 메시지
                             Log::info('크롤링 할 기사 없음');

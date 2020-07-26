@@ -10,14 +10,21 @@ class GatewayController extends Controller
 {
 
     private $gatewayService;
+    private $telegramService;
 
-    public function __construct(GatewayService $gatewayService)
+    public function __construct(GatewayService $gatewayService, TelegramService $telegramService)
     {
         $this->gatewayService = $gatewayService;
+        $this->telegramService = $telegramService;
     }
 
     public function enterGateway(Request $request){
-        return $this->gatewayService->enterGateway($request);
+        $result = $this->gatewayService->enterGateway($request);
+        if ($result == '사용자가 아닙니다.') {
+            $this->telegramService->message('NotReceiver');
+        } else {
+            return $result;
+        }
     }
 
     public function testGateway(){

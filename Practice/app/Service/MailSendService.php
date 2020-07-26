@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use App\MailSendLog;
 use Illuminate\Http\Request;
-use \App\NewsData;
+use App\Repository\NewsDataRepository;
+use App\Repository\MailSendLogRepository;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use \GuzzleHttp\Client;
@@ -13,19 +13,19 @@ use GuzzleHttp\Psr7\Response;
 
 class MailSendService
 {
-    private $newsData;
-    private $mailSendLog;
+    private $newsDataRepository;
+    private $mailSendLogRepository;
 
-    public function __construct(NewsData $newsData, MailSendLog $mailSendLog)
+    public function __construct(NewsDataRepository $newsDataRepository, MailSendLogRepository $mailSendLogRepository)
     {
-        $this->newsData = $newsData;
-        $this->mailSendLog = $mailSendLog;
+        $this->newsDataRepository = $newsDataRepository;
+        $this->mailSendLogRepository = $mailSendLogRepository;
     }
 
     public function getMailContent($uid){
         $emailContent = '<h1> 사람인 관련 기사 </h1> <br>';
         // Model에 정의해둔 select 로직인 getNews() 메서드 사용
-        foreach($this->newsData->getNews() as $data){
+        foreach($this->newsDataRepository->getNews() as $data){
             $query = http_build_query(
                 array(
                     'url' => $data->news_url,
@@ -73,7 +73,7 @@ class MailSendService
             if ($e instanceof ConnectException){
                 return 'MailAPIFail';
             }
-            return 'Fail';
+            return 'MailFail';
         }
 
 
@@ -81,11 +81,11 @@ class MailSendService
         if($response->getStatusCode() == 200){
             if (json_decode($response->getBody()->getContents())->code == '200'){
                 // 메일발송 성공 로그 적재
-                $this->mailSendLog->insertLog($userData->idx, true);
+                $this->mailSendLogRepository->insertLog($userData->idx, true);
                 return 'Success';
             } else {
                 // 메일발송 실패 로그 적재, 텔레그램
-                $this->mailSendLog->insertLog($userData->idx, false);
+                $this->mailSendLogRepository->insertLog($userData->idx, false);
                 return 'MailSendFail';
             }
         } else {

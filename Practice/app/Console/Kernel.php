@@ -41,7 +41,8 @@ class Kernel extends ConsoleKernel
         // 최신 방법 시작
         // DB 값을 참조 (메일 스케줄 시간 및 수신자 정보)
         // 이전날 기사가 있을경우
-        $NewsData = NewsData::select('*')->where('news_date',date('Y-m-d'))->get();
+        $NewsData = NewsData::select('*')->where('news_date','>=',date('Y-m-d',strtotime('-7 days')))->get();
+
         if (!$NewsData->isEmpty()){
             $userData = DB::table('Receivers')->select('*')->get();
             // dump($userData->isEmpty());
@@ -54,7 +55,6 @@ class Kernel extends ConsoleKernel
                             $userData[$i]->idx
                             ,$userData[$i]->email
                             ,$userData[$i]->name
-                            ,$userData[$i]->token
                         ]
                     )
                     ->at(date('H:i'));
