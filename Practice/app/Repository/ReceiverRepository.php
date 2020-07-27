@@ -13,7 +13,7 @@ class ReceiverRepository{
         $this->receiver = $receiver;
     }
 
-    public function isReceiver($uid){// $token){
+    public function isReceiver($uid){
         if ($this->receiver->select('*')->where('idx','=',$uid)->exists()){//->where('token','=','$token')->get()){
             return true;
         } else {

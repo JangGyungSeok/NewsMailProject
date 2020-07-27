@@ -22,25 +22,6 @@ class MailSendService
         $this->mailSendLogRepository = $mailSendLogRepository;
     }
 
-    public function getMailContent($uid){
-        $emailContent = '<h1> 사람인 관련 기사 </h1> <br>';
-        // Model에 정의해둔 select 로직인 getNews() 메서드 사용
-        foreach($this->newsDataRepository->getNews() as $data){
-            $query = http_build_query(
-                array(
-                    'url' => $data->news_url,
-                    'uid' => $uid,
-                    'mailDate' => date('Y-m-d')
-                )
-                , '&amp'
-            );
-            // a태그 query로 redirect url과 사용자 idx, token 전달 (수신자 db정의, 수신자 정보 전달받은 이후 가능)
-            $emailContent =$emailContent.'<a href=http://172.18.128.1/gateway?'.$query.' target=_blank> <h1>'.$data->news_title.'</h1></a><br>';
-        }
-
-        return $emailContent;
-    }
-
     // 메일발송 메서드 정의
     public function sendMail($userData){
 
@@ -53,7 +34,7 @@ class MailSendService
         $mail_api_url = "http://crm3.saramin.co.kr/mail_api/automails";
         $client = new Client;
         try {
-            $emailContent = $this->getMailContent($userData->idx);
+            $emailContent = $this->newsDataRepository->getMailContentByDate(date('Y-m-d'),$userData->idx);
             $response = $client->post(
                 $mail_api_url,
                 [

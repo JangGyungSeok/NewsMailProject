@@ -36,6 +36,7 @@ class MailSendLogRepository{
             DB::raw('COUNT(if(is_success=0,is_success,null)) as send_fail')
         )
         ->groupBy('mail_date')
+        ->orderBy('mail_date','DESC')
         ->get();
         return $logTable;
 

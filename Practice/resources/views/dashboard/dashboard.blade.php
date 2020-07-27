@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href={{asset('/css/app.css')}} rel='stylesheet'>
-    </head>
-    <body>
+@extends('layouts.basic')
+
+@section('content')
+    <div class='container col-md-12 no-gutters'>
         <table class="table" name='mailSendLog'>
-            {{ $mailSendLog }}
+            {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>발송일</th>
                 <th scope='col'>상세내용</th>
@@ -27,5 +23,5 @@
                 @endforeach
             </tbody>
         </table>
-    </body>
-</html>
+    </div>
+@endsection

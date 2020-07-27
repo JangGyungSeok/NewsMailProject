@@ -25,12 +25,6 @@ class DashBoardController extends Controller
     }
 
     public function mailSendLogDetail($mail_date){
-        $receiveTimeLogDetail = $this->dashBoardService->mailSendLogDetail($mail_date);
-        return view(
-            '/dashboard/mailSendLogDetail',
-            [
-                'receiveTimeLogDetail' => $receiveTimeLogDetail
-            ]
-        );
+        return $this->dashBoardService->mailSendLogDetail($mail_date);
     }
 }
