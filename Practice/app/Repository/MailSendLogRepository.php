@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\MailSendLog;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class MailSendLogRepository{
     protected $mailSendLog;
@@ -24,22 +25,18 @@ class MailSendLogRepository{
     }
 
     public function getLogTableContent(){
-        // $logTable = MailSendLog::select(
-        //     'date_format(send_time),
-        //     count(uid),
-        //     count(if(is_success=1,is_success,null)),
-        //     count(if(is_success=0,is_success,null))'
-        // )
-        // // 오늘 이전꺼만 가져오도록 조건추가
-        // ->groupBy('date_format(send_time)')
-        // ->get();
+        // 발송날짜를 기준으로 group by
+        // 각 날짜별 발송성공, 실패 보여줌
+        // 내 로직 특성 상 오늘 이전 데이터만 보여줘야함
         $logTable = $this->mailSendLog
-            ->select('*')
-            ->get();
-        // $logTable = MailSendLog::select('count(send_time)')
-        // // 오늘 이전꺼만 가져오도록 조건추가
-        // ->get();
-
+        ->select(
+            DB::raw("date_format(send_time, '%Y-%m-%d') as mail_date"),
+            DB::raw('count(uid) as total_send'),
+            DB::raw('COUNT(if(is_success=1,is_success,null)) as send_success'),
+            DB::raw('COUNT(if(is_success=0,is_success,null)) as send_fail')
+        )
+        ->groupBy('mail_date')
+        ->get();
         return $logTable;
 
     }

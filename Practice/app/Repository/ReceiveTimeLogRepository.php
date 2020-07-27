@@ -23,4 +23,9 @@ class ReceiveTimeLogRepository{
             ]
         );
     }
+
+    public function getLogBymailDate($mail_date)
+    {
+        return $this->receiveTimeLog->select('*')->where('mail_date',$mail_date)->get();
+    }
 }

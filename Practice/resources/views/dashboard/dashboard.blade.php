@@ -9,7 +9,6 @@
         <table class="table" name='mailSendLog'>
             {{ $mailSendLog }}
             <thead class='thead-dark'>
-                <th scope='col'>번호</th>
                 <th scope='col'>발송일</th>
                 <th scope='col'>상세내용</th>
                 <th scope='col'>대상자 수</th>
@@ -17,14 +16,15 @@
                 <th scope='col'>발송 실패</th>
             </thead>
             <tbody>
-
-                {{-- @foreach ($mailSendLog as $log)
+                @foreach ($mailSendLog as $log)
                     <tr>
-                        <th> {{$log->idx}} </th>
-                        <td> {{$log->send_time}} </td>
-                        <td> {{$log->uid}} </td>
+                        <th> {{$log->mail_date}} </th>
+                    <td> <a href='/dashboard/mailSendLogDetail/{{$log->mail_date}}'>상세보기</a> </td>
+                        <td> {{$log->total_send}} </td>
+                        <td> {{$log->send_success}} </td>
+                        <td> {{$log->send_fail}} </td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </body>
