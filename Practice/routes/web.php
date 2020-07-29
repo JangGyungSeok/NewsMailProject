@@ -13,21 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'DashBoardController@test');
-Route::get('/MailLog', 'DashBoardController@test');
-Route::get('/ReceiveLog', 'DashBoardController@test');
-Route::get('/abc','CrawlerController@crawlingNews');
-
-Route::get('/sendMail','MailSendController@sendMail');
-
+Route::get('/dashBoard', 'DashBoardController@test');
+Route::get('/dashboard/mailSendLogDetail/{mail_date}', 'DashBoardController@mailSendLogDetail');
 Route::get('/gateway','GatewayController@enterGateway');
 
-Route::get('/test','GatewayController@testGateway');
 
-Route::get('/testTelegram',function(){
-    return '안녕하세요?1';
-});
-Route::get('/testTelegram/test',function(){
-    return '안녕하세요?';
-});
+// Route::get('/MailLog', 'DashBoardController@test');
+// Route::get('/ReceiveLog', 'DashBoardController@test');
+// Route::get('/abc','CrawlerController@crawlingNews');
+
+// Route::get('/sendMail','MailSendController@sendMail');
+
+
+// Route::get('/test','GatewayController@testGateway');
+
+// Route::get('/testTelegram',function(){
+//     return '안녕하세요?1';
+// });
+// Route::get('/testTelegram/test',function(){
+//     return '안녕하세요?';
+// });
 // https://api.telegram.org/bot1251668721:AAGF_dVMoDf4eUvXwGHqgbp5N3FJUdmmVAI/setWebhook?url=https://172.20.38.69/testTelegram
