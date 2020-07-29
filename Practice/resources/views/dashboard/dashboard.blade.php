@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.basic')
 
-    </head>
-    <body>
-        안녕하세요?
-    </body>
-</html>
+<script src="{{ asset('js/dashboard.js') }}" defer></script>
+@section('content')
+    <div class='container col-md-12 no-gutters'>
+        {{-- {{ json_encode($mailSendLog) }} --}}
+        <table class="table" id='mailSendLogTable' data-mail-send-log='{{ json_encode($mailSendLog) }}'>
+            {{-- {{ $mailSendLog }} --}}
+            <thead class='thead-dark'>
+                <th scope='col'>발송일</th>
+                <th scope='col'>상세내용</th>
+                <th scope='col'>대상자 수</th>
+                <th scope='col'>발송 성공</th>
+                <th scope='col'>발송 실패</th>
+            </thead>
+            <tbody>
+                @foreach ($mailSendLog as $log)
+                    <tr>
+                        <th> {{$log->mail_date}} </th>
+                        <td> <a href='/dashboard/mailSendLogDetail/{{$log->mail_date}}'>상세보기</a> </td>
+                        <td> {{$log->total_send}} </td>
+                        <td> {{$log->send_success}} </td>
+                        <td> {{$log->send_fail}} </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <canvas id='myChart'>
+
+    </canvas>
+@endsection

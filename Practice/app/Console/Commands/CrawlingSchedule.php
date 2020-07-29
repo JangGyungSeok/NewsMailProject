@@ -3,13 +3,14 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\CrawlerController;
 use Illuminate\Support\Facades\Log;
+
+use App\Service\CrawlerService;
 
 class CrawlingSchedule extends Command
 {
 
-    protected $crawlerController;
+    protected $crawlerService;
     /**
      * The name and signature of the console command.
      *
@@ -30,10 +31,10 @@ class CrawlingSchedule extends Command
      * @return void
      */
     // 의존성 주입
-    public function __construct(CrawlerController $crawlerController)
+    public function __construct(CrawlerService $crawlerService)
     {
         parent::__construct();
-        $this->crawlerController = $crawlerController;
+        $this->crawlerService = $crawlerService;
     }
 
     /**
@@ -46,7 +47,7 @@ class CrawlingSchedule extends Command
     {
         Log::info('크롤링 스케줄 시작!');
 
-        $this->crawlerController->crawlingNews();
+        $this->crawlerService->crawlingNews();
 
         Log::info('크롤링 스케줄 끝!');
     }

@@ -23,3 +23,18 @@
 	develop -> master 브랜치 pull
 	JKS -> develop 브랜치 pull
 	JKS -> 브랜치 상태 확인을 위한 push
+
+### 2020-07-20 ~ 22
+	JKS -> gateway page Route정의 및 사용자 확인 로직 실행(DB적재)
+	JKS -> 크롤링 로직 전면 수정
+	JKS -> 전체 코드 MVC기반 재정리
+	JKS -> develop 브랜치 병합
+	develop -> master 브랜치 병합
+
+### 2020-07-23
+	JKS -> 텔레그램 메시지 발송 로직 작성
+	JKS -> Controller 로직 Service로 이동
+	JKS -> 각 Service 로직 Exception 확인 및 처리로직 정의
+	JKS -> 각 Exception에 따른 텔레그램 메시지 발송 확인
+	JKS -> develop 브랜치 병합
+	develop -> master 브랜치 병합
