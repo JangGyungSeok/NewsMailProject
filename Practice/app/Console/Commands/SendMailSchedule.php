@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\MailSendController;
+use App\Service\MailSendService;
 use Illuminate\Support\Facades\Log;
 
 use function PHPSTORM_META\map;
@@ -11,7 +12,7 @@ use function PHPSTORM_META\map;
 class SendMailSchedule extends Command
 {
 
-    protected $mailSendController;
+    protected $mailSendService;
     /**
      * The name and signature of the console command.
      *
@@ -34,10 +35,10 @@ class SendMailSchedule extends Command
      */
 
      // 의존성 주입
-    public function __construct(MailSendController $mailSendController)
+    public function __construct(MailSendService $mailSendService)
     {
         parent::__construct();
-        $this->mailSendController = $mailSendController;
+        $this->mailSendService = $mailSendService;
     }
 
     /**
@@ -59,7 +60,7 @@ class SendMailSchedule extends Command
         // }
         Log::info('메일발송 스케줄 실행!');
         // 의존성주입으로 선언한 Controller를 사용해 메일발송로직 실행
-        $this->mailSendController->sendMail($userData);
+        $this->mailSendService->sendMail($userData);
         Log::info('메일발송 스케줄 종료');
     }
 }
