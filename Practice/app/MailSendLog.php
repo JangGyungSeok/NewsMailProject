@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 
 class MailSendLog extends Model
 {
+    public $timestamps = false;
+
     public function receiver(){
         return $this->belongTo('App\Receiver','foreign_key','token');
     }
