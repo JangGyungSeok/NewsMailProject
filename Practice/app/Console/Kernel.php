@@ -63,6 +63,8 @@ class Kernel extends ConsoleKernel
             }
         }
 
+        $schedule->command('command:SendReservationSchedule')->at('23:59');
+
 
         // 최신 방법 끝
 
