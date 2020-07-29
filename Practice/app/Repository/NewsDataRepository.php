@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 use App\NewsData;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class NewsDataRepository{
@@ -81,8 +82,8 @@ class NewsDataRepository{
 
     public function getNewsByDate($news_date)
     {
-        // Log::info(date($news_date, strtotime('-7 days')));
-        // Log::info(date('Y-m-d',strtotime($news_date.' -7 days')));
+        Log::info(date($news_date, strtotime('-7 days')));
+        Log::info(date('Y-m-d',strtotime($news_date.' -7 days')));
         return $this->newsData->select('*')
             ->where(
                 [
@@ -91,5 +92,8 @@ class NewsDataRepository{
                 ]
             )
             ->get();
+
+
+
     }
 }

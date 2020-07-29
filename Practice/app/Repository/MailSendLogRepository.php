@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\MailSendLog;
+use App\Service\MailSendService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class MailSendLogRepository{
     }
 
     public function insertLog($uid, $isSuccess){
-        return MailSendLog::insert(
+        return $this->mailSendLog->insert(
             [
                 'send_time' => date('Y-m-d h:i:s'),
                 'uid' => $uid,
