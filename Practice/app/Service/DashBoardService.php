@@ -26,7 +26,13 @@ class DashBoardService{
     }
 
     public function abc(){
-        return $this->mailSendLogRepository->getLogTableContent();
+        $mailSendLog = $this->mailSendLogRepository->getLogTableContent();
+        return view(
+            '/dashboard/dashboard',
+            [
+                'mailSendLog' => $mailSendLog
+            ]
+        );
     }
 
     public function mailSendLogDetail($mail_date)

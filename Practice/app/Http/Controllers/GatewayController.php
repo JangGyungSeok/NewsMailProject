@@ -27,8 +27,8 @@ class GatewayController extends Controller
         }
     }
 
-    public function testGateway(){
-        $temp = new TelegramService;
-        return $temp->testMessage();
-    }
+    // public function testGateway(){
+    //     $temp = new TelegramService;
+    //     return $temp->testMessage();
+    // }
 }

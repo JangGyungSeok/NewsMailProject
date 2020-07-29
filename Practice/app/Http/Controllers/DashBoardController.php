@@ -15,16 +15,12 @@ class DashBoardController extends Controller
     }
 
     public function test(){
-        $mailSendLog = $this->dashBoardService->abc();
-        return view(
-            '/dashboard/dashboard',
-            [
-                'mailSendLog' => $mailSendLog
-            ]
-        );
+        return $this->dashBoardService->abc();
+
     }
 
     public function mailSendLogDetail($mail_date){
         return $this->dashBoardService->mailSendLogDetail($mail_date);
     }
+
 }
