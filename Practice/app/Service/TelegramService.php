@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use \GuzzleHttp\Client;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 define('BOT_TOKEN',env('TELEGRAM_BOT_TOKEN'));
@@ -10,24 +10,8 @@ define('API_URL','http://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 class TelegramService
 {
-    public function testMessage(){
-        $client = new Client(['base_uri'=>API_URL,'verify' => false]);
-
-        $response = $client->post('sendMessage',
-            [
-                'query'=>
-                [
-                    'chat_id'=>'1367642600',
-                    'text' => '하이'
-                ]
-            ]
-        );
-
-        return $response->getBody();
-        // return $updates;
-    }
-
-    public function getMessageContent($situation){
+    public function getMessageContent($situation)
+    {
         switch($situation){
             // 뉴스포털 URL이 문제있는경우
             case 'CrawlingURLFail':
@@ -67,12 +51,15 @@ class TelegramService
         }
         return $message;
     }
-    public function message($situation){
+
+    public function message($situation)
+    {
         $message = $this->getMessageContent($situation);
 
-        $client = new Client(['base_uri'=>API_URL,'verify'=>false]);
+        $client = new Client(['base_uri'=>API_URL, 'verify'=>false]);
 
-        $response = $client->post('sendMessage',
+        $response = $client->post(
+            'sendMessage',
             [
                 'query'=>
                 [

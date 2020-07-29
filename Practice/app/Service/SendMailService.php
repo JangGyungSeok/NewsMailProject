@@ -2,28 +2,32 @@
 
 namespace App\Service;
 
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Exceptions\CustomException;
 use App\Repository\NewsDataRepository;
 use App\Repository\MailSendLogRepository;
-use Exception;
-use Illuminate\Support\Facades\Log;
-use \GuzzleHttp\Client;
-use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Exception\ConnectException;
 
-class MailSendService
+class SendMailService
 {
     private $newsDataRepository;
     private $mailSendLogRepository;
 
-    public function __construct(NewsDataRepository $newsDataRepository, MailSendLogRepository $mailSendLogRepository)
-    {
+    public function __construct(
+        NewsDataRepository $newsDataRepository,
+        MailSendLogRepository $mailSendLogRepository
+    ) {
         $this->newsDataRepository = $newsDataRepository;
         $this->mailSendLogRepository = $mailSendLogRepository;
     }
 
     // 메일발송 메서드 정의
-    public function sendMail($userData){
+    public function sendMail($userData)
+    {
 
         // 메일 컨텐츠 동적생성 - 동작성공 (다듬기 미완성)
         // 내용물 생성 완료! (일주일 이전 ~ 현재 기사를 DB에서 읽어옴)
@@ -51,26 +55,28 @@ class MailSendService
                 ]
             );
         } catch (Exception $e) {
-            if ($e instanceof ConnectException){
-                return 'MailAPIFail';
+            if ($e instanceof ConnectException) {
+                throw new CustomException('MailAPIFail');
             }
-            return 'MailFail';
+            throw new CustomException('MailFail');
         }
 
 
 
-        if($response->getStatusCode() == 200){
-            if (json_decode($response->getBody()->getContents())->code == '200'){
+        if ($response->getStatusCode() == 200) {
+            if (json_decode($response->getBody()->getContents())->code == '200') {
                 // 메일발송 성공 로그 적재
                 $this->mailSendLogRepository->insertLog($userData->idx, true);
-                return 'Success';
+
+                return true;
             } else {
                 // 메일발송 실패 로그 적재, 텔레그램
                 $this->mailSendLogRepository->insertLog($userData->idx, false);
-                return 'MailSendFail';
+
+                throw new CustomException('MailSendFail');
             }
         } else {
-            return 'MailAPIFail';
+            throw new CustomException('MailAPIFail');
         }
     }
 

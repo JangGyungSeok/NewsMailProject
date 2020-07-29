@@ -4,25 +4,27 @@ namespace App\Service;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Repository\ReceiveTimeLogRepository;
+use App\Exceptions\CustomException;
 use App\Repository\ReceiverRepository;
-use \App\Telegram;
-
+use App\Repository\ReceiveTimeLogRepository;
 
 class GatewayService
 {
     private $receiverRepository;
     private $receiveTimeLogRepository;
 
-    public function __construct(ReceiverRepository $receiverRepository,ReceiveTimeLogRepository $receiveTimeLogRepository)
-    {
+    public function __construct(
+        ReceiverRepository $receiverRepository,
+        ReceiveTimeLogRepository $receiveTimeLogRepository
+    ) {
         $this->receiverRepository = $receiverRepository;
         $this->receiveTimeLogRepository = $receiveTimeLogRepository;
     }
 
 
     // 요청 정보를 확인할 수 있는 Request객체를 사용
-    public function enterGateway(Request $request){
+    public function enterGateway(Request $request)
+    {
         $uid = $request->query('uid');
         $url = $request->query('url');
         $mailDate = $request->query('mailDate');
@@ -43,8 +45,9 @@ class GatewayService
             $this->receiveTimeLogRepository->insertLog($uid,$mailDate);
 
             return Redirect($url);
-        }else {
-            return '사용자가 아닙니다.';
+        } else {
+            throw new CustomException('NotReceiver');
+            // return '사용자가 아닙니다.';
         }
 
     }

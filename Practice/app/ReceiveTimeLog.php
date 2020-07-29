@@ -9,10 +9,8 @@ class ReceiveTimeLog extends Model
     public $timestamps = false;
     //
 
-    public function receiver(){
-        return $this->belongsTo('App\Receiver','foreign_key','token');
+    public function receiver()
+    {
+        return $this->belongsTo('App\Receiver', 'foreign_key', 'idx');
     }
-
-
-
 }

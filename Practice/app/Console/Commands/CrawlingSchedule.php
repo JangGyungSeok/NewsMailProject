@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Service\CrawlerService;
 use Illuminate\Support\Facades\Log;
+
+use App\Service\CrawlerService;
 
 class CrawlingSchedule extends Command
 {

@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Service\SendReservationService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use App\Service\SendReservationService;
 
 class SendReservationSchedule extends Command
 {

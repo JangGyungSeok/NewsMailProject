@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\MailSendLogRepository;
-use App\Repository\NewsDataRepository;
-use App\Repository\ReceiveTimeLogRepository;
-use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\Log;
+use App\Repository\NewsDataRepository;
+use App\Repository\MailSendLogRepository;
+use App\Repository\ReceiveTimeLogRepository;
 
-class DashBoardService{
-
+class DashBoardService
+{
     protected $mailSendLogRepository;
     protected $receiveTimeLogRepository;
 
@@ -18,14 +18,14 @@ class DashBoardService{
         MailSendLogRepository $mailSendLogRepository,
         ReceiveTimeLogRepository $receiveTimeLogRepository,
         NewsDataRepository $newsDataRepository
-    )
-    {
+    ) {
         $this->newsDataRepository = $newsDataRepository;
         $this->mailSendLogRepository = $mailSendLogRepository;
         $this->receiveTimeLogRepository = $receiveTimeLogRepository;
     }
 
-    public function abc(){
+    public function abc()
+    {
         $mailSendLog = $this->mailSendLogRepository->getLogTableContent();
         return view(
             '/dashboard/dashboard',

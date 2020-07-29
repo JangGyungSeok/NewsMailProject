@@ -14,12 +14,14 @@ class DashBoardController extends Controller
         $this->dashBoardService = $dashBoardService;
     }
 
-    public function test(){
+    public function test()
+    {
         return $this->dashBoardService->abc();
 
     }
 
-    public function mailSendLogDetail($mail_date){
+    public function mailSendLogDetail($mail_date)
+    {
         return $this->dashBoardService->mailSendLogDetail($mail_date);
     }
 
