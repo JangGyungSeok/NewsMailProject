@@ -27,7 +27,7 @@ class CrawlerService
         while (true) {
             try {
                     // http://www.hkrecruit.co.kr/news/articleList.html?page=1&total=593&box_idxno=&sc_area=A&view_type=sm&sc_word=%EC%82%AC%EB%9E%8C%EC%9D%B8
-                $url = 'http://www.hkrecruit.co.kr/news/articleList.html?page='
+                $url = 'http://www.hkrecruita.co.kr/news/articleList.html?page='
                     .(string)$page.
                     '&total=593&box_idxno=&sc_area=A&view_type=sm&sc_word=%EC%82%AC%EB%9E%8C%EC%9D%B8';
 
@@ -92,7 +92,7 @@ class CrawlerService
                 } elseif ($e instanceof \RuntimeException) {
                     throw new CustomException('NotGoodCssSelector');
                 }
-                throw new CustomException('ChangedArchitecture');
+                report($e);
             } //catch
         } //while
     }

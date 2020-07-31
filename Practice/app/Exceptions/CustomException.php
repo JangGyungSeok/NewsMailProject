@@ -29,6 +29,8 @@ class CustomException extends Exception
     {
         if ($this->situation == 'NotReceiver') {
             return '미확인 사용자';
+        } elseif ($this->situation == 'NewsIsChanged') {
+            return '뉴스기사가 변경 또는 삭제되었습니다.';
         }
     }
 

@@ -62,22 +62,26 @@ class SendMailService
         }
 
 
+        try {
+            if ($response->getStatusCode() == 200) {
+                if (json_decode($response->getBody()->getContents())->code == '200') {
+                    // 메일발송 성공 로그 적재
+                    $this->mailSendLogRepository->insertLog($userData->idx, true);
 
-        if ($response->getStatusCode() == 200) {
-            if (json_decode($response->getBody()->getContents())->code == '200') {
-                // 메일발송 성공 로그 적재
-                $this->mailSendLogRepository->insertLog($userData->idx, true);
+                    return true;
+                } else {
+                    // 메일발송 실패 로그 적재, 텔레그램
+                    $this->mailSendLogRepository->insertLog($userData->idx, false);
 
-                return true;
+                    throw new CustomException('MailSendFail');
+                }
             } else {
-                // 메일발송 실패 로그 적재, 텔레그램
-                $this->mailSendLogRepository->insertLog($userData->idx, false);
-
-                throw new CustomException('MailSendFail');
+                throw new CustomException('MailAPIFail');
             }
-        } else {
-            throw new CustomException('MailAPIFail');
+        } catch (Exception $e) {
+            report($e);
         }
+
     }
 
 }
