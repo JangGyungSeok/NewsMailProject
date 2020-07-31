@@ -13,8 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashBoard', 'DashBoardController@test');
-Route::get('/dashboard/mailSendLogDetail/{mail_date}', 'DashBoardController@mailSendLogDetail');
+Route::get('/dashBoard', 'DashBoardController@home');
+
+Route::get('/dashBoard/receivers', 'DashBoardController@receivers');
+
+Route::get('/dashBoard/allNews', 'DashBoardController@allNews');
+
+Route::get('/dashBoard/mailSendLog', 'DashBoardController@mailSendLog');
+Route::get('/dashBoard/mailSendLog/mailSendLogDetail/{mail_date}', 'DashBoardController@mailSendLogDetail');
+
+
+
 Route::get('/gateway','GatewayController@enterGateway');
 
 

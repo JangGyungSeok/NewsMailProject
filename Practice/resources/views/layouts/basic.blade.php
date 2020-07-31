@@ -24,10 +24,13 @@
                         <a class='bg-dark text-white h5 nav-link' href='/dashBoard'>home </a>
                     </li>
                     <li>
-                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard'>링크1 </a>
+                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard/allNews'>전체뉴스 </a>
                     </li>
                     <li>
-                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard'>링크2 </a>
+                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard/mailSendLog'>메일발송현황 </a>
+                    </li>
+                    <li>
+                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard/receivers'>사용자 정보 </a>
                     </li>
                 </div>
             </div>

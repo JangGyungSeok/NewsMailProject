@@ -17,7 +17,7 @@
                 @foreach ($mailSendLog as $log)
                     <tr>
                         <th> {{$log->mail_date}} </th>
-                        <td> <a href='/dashboard/mailSendLogDetail/{{$log->mail_date}}'>상세보기</a> </td>
+                        <td> <a href='/dashBoard/mailSendLog/mailSendLogDetail/{{$log->mail_date}}'>상세보기</a> </td>
                         <td> {{$log->total_send}} </td>
                         <td> {{$log->send_success}} </td>
                         <td> {{$log->send_fail}} </td>
