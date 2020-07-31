@@ -16,16 +16,10 @@ class ReceiverRepository
 
     public function isReceiver($uid)
     {
-        if (
-            $this->receiver
-                ->select('*')
-                ->where('idx','=',$uid)
-                ->exists()
-        ) {//->where('token','=','$token')->get()){
-            return true;
-        } else {
-            return false;
-        }
+        return $this->receiver
+            ->select('*')
+            ->where('idx','=',$uid)
+            ->exists();
     }
 
     public function getFavoriteTime()

@@ -19,7 +19,6 @@ class ReceiveTimeLogRepository
     {
         return $this->receiveTimeLog->insert(
             [
-                //uid로 변경예정
                 'uid' => $uid,
                 'mail_date' => $mailDate,
                 'enter_time' => date('Y-m-d H:i:s')
@@ -63,15 +62,5 @@ class ReceiveTimeLogRepository
             )
             ->groupBy('uid')
             ->get();
-
-        // return $this->receiveTimeLog
-        // ->select(
-        //     'uid',
-        //     DB::raw("DATE_FORMAT(enter_time,'%H:00:00') as enter_hour")
-        // )
-        // ->where(DB::raw("date_format(enter_time,'%Y-%m-%d')") , '=' , '2020-07-24')
-        // ->groupBy(['uid','enter_hour'])
-        // ->limit(1)
-        // ->get();
     }
 }
