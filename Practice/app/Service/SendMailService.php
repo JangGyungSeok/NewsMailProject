@@ -6,6 +6,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Exceptions\CustomException;
+use App\Exceptions\MailAPIFailException;
+use App\Exceptions\MailFailException;
+use App\Exceptions\MailSendFailException;
 use App\Repository\NewsDataRepository;
 use App\Repository\MailSendLogRepository;
 use GuzzleHttp\Client;
@@ -56,9 +59,9 @@ class SendMailService
             );
         } catch (Exception $e) {
             if ($e instanceof ConnectException) {
-                throw new CustomException('MailAPIFail');
+                throw new MailAPIFailException();
             }
-            throw new CustomException('MailFail');
+            throw new MailFailException();
         }
 
 
@@ -73,10 +76,10 @@ class SendMailService
                     // 메일발송 실패 로그 적재, 텔레그램
                     $this->mailSendLogRepository->insertLog($userData->idx, false);
 
-                    throw new CustomException('MailSendFail');
+                    throw new MailSendFailException();
                 }
             } else {
-                throw new CustomException('MailAPIFail');
+                throw new MailAPIFailException();
             }
         } catch (Exception $e) {
             report($e);

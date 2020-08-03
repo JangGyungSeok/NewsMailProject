@@ -2,11 +2,16 @@
 
 namespace App\Service;
 
+use App\Exceptions\ChangedArchitectureException;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Exceptions\CustomException;
+use App\Exceptions\NewsIsChangedException;
+use App\Exceptions\NoContentException;
+use App\Exceptions\NotGoodCSSSelectorException;
+use App\Exceptions\NotReceiverException;
 use App\Repository\NewsDataRepository;
 use App\Repository\ReceiverRepository;
 use App\Repository\ReceiveTimeLogRepository;
@@ -41,16 +46,16 @@ class GatewayService
             $title = $crawler->filter('#user-container > div.float-center.max-width-1080 > header > div > div')->text();
             if ($title == null) {
                 Log::info('CSS Selector는 있으나 비어있음');
-                throw new CustomException('NoContent');
+                throw new NoContentException();
             }
         } catch (Exception $e) {
             if ($e instanceof TransportException) {
                 Log::info('URL경로가 잘못되었습니다.');
                 throw new CustomException('404');
             } elseif ($e instanceof \RuntimeException) {
-                throw new CustomException('NotGoodCssSelector');
+                throw new NotGoodCSSSelectorException();
             }
-            throw new CustomException('ChangedArchitecture');
+            throw new ChangedArchitectureException();
         }
         return $title;
     }
@@ -74,7 +79,7 @@ class GatewayService
         // title과 db의 title과 다를경우
         if ($title != $newsData[0]->news_title) {
             $this->newsDataRepository->changeUrl($idx);
-            throw new CustomException('NewsIsChanged');
+            throw new NewsIsChangedException();
         } else {
             // DB내용과 실제 기사가 일치할경우
             if ($uid == '0'){ // 대시보드에서 접근할 때 uid=0 즉 관리자
@@ -86,7 +91,7 @@ class GatewayService
 
                 return Redirect($url);
             } else { // uid가 DB에 존재하지않을경우
-                throw new CustomException('NotReceiver');
+                throw new NotReceiverException();
                 // return '사용자가 아닙니다.';
             }
         }

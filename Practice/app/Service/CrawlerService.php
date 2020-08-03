@@ -2,9 +2,12 @@
 
 namespace App\Service;
 
+use App\Exceptions\crawlingURLFailException;
 use Goutte\Client;
 use Illuminate\Support\Facades\Log;
 use App\Exceptions\CustomException;
+use App\Exceptions\NoContentException;
+use App\Exceptions\NotGoodCSSSelectorException;
 use App\Repository\NewsDataRepository;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\Exception\TransportException;
@@ -38,7 +41,7 @@ class CrawlerService
 
                 if ($links->text() == null) {
                     Log::info('CSS Selector는 있으나 비어있음');
-                    throw new CustomException('NoContent');
+                    throw new NoContentException();
                 }
 
                 foreach ($links as $link) {
@@ -88,9 +91,9 @@ class CrawlerService
                 // url이 비정상인경우 발생
                 if ($e instanceof TransportException) {
                     Log::info('URL경로가 잘못되었습니다.');
-                    throw new CustomException('CrawlingURLFail');
+                    throw new crawlingURLFailException;
                 } elseif ($e instanceof \RuntimeException) {
-                    throw new CustomException('NotGoodCssSelector');
+                    throw new NotGoodCSSSelectorException;
                 }
                 report($e);
             } //catch
