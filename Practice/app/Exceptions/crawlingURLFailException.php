@@ -6,7 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
-class crawlingURLFailException extends Exception
+class CrawlingURLFailException extends Exception
 {
     protected $telegramService;
     public function __construct()

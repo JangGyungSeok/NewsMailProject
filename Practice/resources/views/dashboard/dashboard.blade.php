@@ -26,7 +26,9 @@
             </tbody>
         </table>
     </div>
-    <canvas id='myChart'>
+    <div class='col-md-6 no-gutters'>
+        <canvas id='myChart'>
 
-    </canvas>
+        </canvas>
+    </div>
 @endsection

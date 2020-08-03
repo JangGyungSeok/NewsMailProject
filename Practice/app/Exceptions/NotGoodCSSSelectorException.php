@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Container\Container;
 
 class NotGoodCSSSelectorException extends Exception
 {
@@ -12,6 +13,8 @@ class NotGoodCSSSelectorException extends Exception
 
     public function __construct()
     {
+        // $container = Container::getInstance();
+        // $this->telegramService = $container->make(TelegramService::class);
         $this->telegramService = new TelegramService;
     }
 

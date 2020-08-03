@@ -17,10 +17,10 @@ var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: dates,
+        labels: dates.reverse(),
         datasets: [{
             label: 'SendSuccess',
-            data: send_success,
+            data: send_success.reverse(),
             backgroundColor: [
                 'rgba(0, 255, 0, 0.2)',
             ],
@@ -31,7 +31,7 @@ var myChart = new Chart(ctx, {
         }
         ,{
             label: 'SendFail',
-            data: send_fail,
+            data: send_fail.reverse(),
             backgroundColor:[
                 'rgba(255, 0, 0, 0.3)'
             ],
