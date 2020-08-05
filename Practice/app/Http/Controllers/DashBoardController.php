@@ -17,7 +17,7 @@ class DashBoardController extends Controller
     # 대시보드 메인화면 /dashBoard
     public function home()
     {
-        return view('/dashboard/home');
+        return $this->dashBoardService->home();
     }
 
     # 메일발송 로그화면 /dashboard/mailSendLog

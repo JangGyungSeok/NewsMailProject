@@ -4,11 +4,11 @@
 @section('content')
     <div class='row row-cols-2 col-md-12 no-gutters'>
 
-        <div class='col-6 justify-content-center no-gutters' id='mailContent'>
+        <div class='col-6 no-gutters' id='mailContent'>
             {!!$mailContent!!}
             {{-- {{$mailContent}} --}}
         </div>
-        <div class='col-6 justify-content-center no-gutters'>
+        <div class='col-6 no-gutters'>
             {{-- {{ $receiveTimeLogDetail }} --}}
             <table class="table" name='mailSendLog'>
                 <thead class='thead-dark'>
@@ -30,9 +30,9 @@
             </table>
         </div>
 
-        <div class='col-12'>
+        {{-- <div class='col-12'>
             페이징넣을부분
-        </div>
+        </div> --}}
 
 
     </div>

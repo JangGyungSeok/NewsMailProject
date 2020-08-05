@@ -6,10 +6,11 @@
         <link href={{asset('css/app.css')}} rel='stylesheet'>
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
     <body>
         @section('navbar')
-    <div class='container col-md-12 no-gutters'>
+    <div class='container col-md-12'>
         <div class="col-md-12 no-gutters">
             <nav class="navbar navbar-dark bg-dark">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">

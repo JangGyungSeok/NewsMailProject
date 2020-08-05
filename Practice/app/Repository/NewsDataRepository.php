@@ -37,8 +37,6 @@ class NewsDataRepository
             ->get();
     }
 
-
-
     public function getMailContentByDate($news_date, $uid=0)
     {
         $emailContent = '<table class="table">
@@ -100,7 +98,6 @@ class NewsDataRepository
             ->where('news_date','<',date('Y-m-d'))
             ->exists();
     }
-
 
     public function getAll()
     {

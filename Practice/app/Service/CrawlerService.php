@@ -3,17 +3,22 @@
 namespace App\Service;
 
 use App\Exceptions\crawlingURLFailException;
-use Goutte\Client;
-use Illuminate\Support\Facades\Log;
 use App\Exceptions\CustomException;
 use App\Exceptions\NoContentException;
 use App\Exceptions\NotGoodCSSSelectorException;
-use App\Repository\NewsDataRepository;
-use Illuminate\Container\Container;
 use InvalidArgumentException;
 use RuntimeException;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\Exception\TransportException;
+use Illuminate\Contracts\Container\BindingResolutionException;
+
+use Goutte\Client;
+use Illuminate\Support\Facades\Log;
+use App\Repository\NewsDataRepository;
+use Illuminate\Container\Container;
+
+use Symfony\Component\DomCrawler\Crawler;
+
+
 
 class CrawlerService
 {
@@ -60,8 +65,9 @@ class CrawlerService
                     $newsDate = explode("|", $temp->filter('div.list-dated')->text())[2];
                     $newsDate = explode(' ', $newsDate)[1];
 
-                    Log::info('뉴스날짜',['left'=>strtotime($newsDate),'right'=>strtotime(date('2020-07-24', strtotime('-1 days')))]);
-                    if (strtotime($newsDate) == strtotime(date('2020-07-24', strtotime('-1 days')))) {
+
+                    if (strtotime($newsDate) == strtotime(date('Y-m-d', strtotime('-1 days')))) {
+                        // Log::info('뉴스날짜',['left'=>strtotime($newsDate),'right'=>strtotime(date('2020-07-24', strtotime('-1 days')))]);
                         $count++;
                         // 기사 제목, URL 크롤링
                         $temp_title = $temp->filter('div.list-titles > a > strong')->text();
@@ -69,7 +75,7 @@ class CrawlerService
 
                         //DB 적재로직 실행
 
-                        Log::info(['날짜 '=>$newsDate,'제목'=>$temp_title,'url'=>$temp_url]);
+                        // Log::info(['날짜 '=>$newsDate,'제목'=>$temp_title,'url'=>$temp_url]);
                         $this->newsDataRepository
                             ->insertNews(
                                 array(
@@ -79,7 +85,7 @@ class CrawlerService
                                 )
                             );
 
-                    } elseif (strtotime($newsDate) >= strtotime(date('2020-07-25'))) {
+                    } elseif (strtotime($newsDate) >= strtotime(date('Y-m-d'))) {
                         continue;
                     } else {
                         if ($count == 0) {
@@ -105,7 +111,7 @@ class CrawlerService
                     throw report($e);
                 }
                 throw $e;
-                return 0;
+                return false;
             } //catch
         } //while
     }

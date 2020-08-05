@@ -26,7 +26,7 @@ class ReceiveTimeLogRepository
         );
     }
 
-    public function getLogBymailDate($mail_date)
+    public function getLogByMailDate($mail_date)
     {
         return $this->receiveTimeLog
             ->join('receivers','uid','=','receivers.idx')
@@ -47,7 +47,7 @@ class ReceiveTimeLogRepository
                         FROM
                             receive_time_logs
                         WHERE
-                            DATE_FORMAT(enter_time, '%Y-%m-%d') = '2020-07-24'
+                            DATE_FORMAT(enter_time, '%Y-%m-%d') = DATE_FORMAT(now(), '%Y-%m-%d')
                             AND uid = A.uid
                             AND DATE_FORMAT(enter_time,'%H:00:00') >= '10:00:00'
                         GROUP BY

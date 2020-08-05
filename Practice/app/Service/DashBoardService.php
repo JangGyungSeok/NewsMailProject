@@ -28,6 +28,20 @@ class DashBoardService
         $this->receiverRepository = $receiverRepository;
     }
 
+    public function home()
+    {
+        $mailSendLog = $this->mailSendLogRepository->getLogTableContent();
+        $allReceiver = $this->receiverRepository->getAll();
+
+        return view(
+            '/dashboard/home',
+            [
+                'mailSendLog' => $mailSendLog,
+                'allReceiver' => $allReceiver
+            ]
+        );
+    }
+
     public function mailSendLog()
     {
         $mailSendLog = $this->mailSendLogRepository->getLogTableContent();
@@ -42,7 +56,7 @@ class DashBoardService
     public function mailSendLogDetail($mail_date)
     {
         $mailContent = $this->newsDataRepository->getMailContentByDate($mail_date);
-        $receiveTimeLogDetail = $this->receiveTimeLogRepository->getLogBymailDate($mail_date);
+        $receiveTimeLogDetail = $this->receiveTimeLogRepository->getLogByMailDate($mail_date);
 
         return view(
             '/dashboard/mailSendLogDetail',

@@ -60,6 +60,7 @@ class SendMailSchedule extends Command
 
         // 오늘자 크롤링한 뉴스가 없다면 실행하지 않는다.
         if ($this->newsDataRepository->checkNews()) {
+        // if (true) {
             // 크롤링할 뉴스가 있다면 사용자 정보를 불러온다.
             $receiverData = $this->receiverRepository->getAll();
 

@@ -28,9 +28,10 @@ class SendReservationService
         // }
 
         $favoriteTimes = $this->receiveTimeLogRepository->getReceiverFavoriteTime();
+        Log::info($favoriteTimes);
         if (!($favoriteTimes->isEmpty())) {
             foreach ($favoriteTimes as $data) {
-                if ($this->receiverRepository->isReceiver($data->uid)) {
+                if ($this->receiverRepository->isReceiver($data->uid) && $data->enter_hour != null) {
                     // 업데이트 메서드 실행
                     $this->receiverRepository->updateReservationTime($data->uid, $data->enter_hour);
                 }

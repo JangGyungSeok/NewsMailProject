@@ -13,7 +13,7 @@
                 <th scope='col'>발송 성공</th>
                 <th scope='col'>발송 실패</th>
             </thead>
-            <tbody>
+            <tbody id='mailSendLogTableBody'>
                 @foreach ($mailSendLog as $log)
                     <tr>
                         <th> {{$log->mail_date}} </th>
@@ -27,7 +27,7 @@
         </table>
     </div>
     <div class='col-md-6 no-gutters'>
-        <canvas id='myChart'>
+        <canvas id='mailSendLogChart'>
 
         </canvas>
     </div>
