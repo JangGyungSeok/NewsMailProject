@@ -4,7 +4,7 @@
 @section('content')
     <div class='container col-md-12 no-gutters'>
         {{-- {{ json_encode($mailSendLog) }} --}}
-        <table class="table" id='mailSendLogTable' data-mail-send-log='{{ json_encode($mailSendLog) }}'>
+        <table class="table" id='mailSendLogTable'>
             {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>발송일</th>

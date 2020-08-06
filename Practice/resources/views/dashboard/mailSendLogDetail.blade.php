@@ -1,5 +1,5 @@
 @extends('layouts.basic')
-<script src="{{ asset('js/mailSendLogDetail.js') }}" defer></script>
+{{-- <script src="{{ asset('js/mailSendLogDetail.js') }}" defer></script> --}}
 
 @section('content')
     <div class='row row-cols-2 col-md-12 no-gutters'>
@@ -17,7 +17,7 @@
                     <th scope='col'>email</th>
                     <th scope='col'>사용자 유입시간</th>
                 </thead>
-                <tbody data-field='{{ json_encode($receiveTimeLogDetail) }}' id='receiveTimeLogTable'>
+                <tbody id='receiveTimeLogTable'>
                     @foreach ($receiveTimeLogDetail as $log)
                         <tr>
                             <th>{{$log->mail_date}} </th>

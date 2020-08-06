@@ -25,3 +25,8 @@ Route::get('/dashBoard/mailSendLog/mailSendLogDetail/{mail_date}', 'DashBoardCon
 
 
 Route::get('/gateway','GatewayController@enterGateway');
+
+Route::get('/getAllReceiver', 'AjaxController@getAllReceiver');
+Route::get('/getReceiverBySendReservationTime', 'AjaxController@getReceiverBySendReservationTime');
+Route::get('/getAllSendMailLog', 'AjaxController@getAllSendMailLog');
+Route::get('/getSendMailLogByMailDate', 'AjaxController@getSendMailLogByMailDate');

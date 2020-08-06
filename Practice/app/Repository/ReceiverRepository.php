@@ -40,4 +40,10 @@ class ReceiverRepository
     {
         return $this->receiver->get();
     }
+
+
+    public function getReceiverBySendReservationTime($data)
+    {
+        return $this->receiver->select('*')->where('send_reservation_time',$data)->get();
+    }
 }

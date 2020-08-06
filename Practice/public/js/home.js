@@ -1,5 +1,5 @@
 var mailSendLogData = document.getElementById('mailSendLogData');
-var mailSendLogs = JSON.parse(mailSendLogData.dataset.mailSendLog);
+var mailSendLogs = getAllSendMailLog();
 
 dates=[]
 total_send = []
@@ -17,7 +17,7 @@ for(log in mailSendLogs){
 //  =============================================================================
 
 var receiversData = document.getElementById('allReceiversData');
-var receivers = JSON.parse(receiversData.dataset.allReceivers);
+var receivers = getAllReceiver;
 var receiversSendReservationTime = []
 
 for (i in receivers){
@@ -119,3 +119,30 @@ $(document).ready(
 
     }
 )
+
+
+function getAllReceiver() {
+    var result;
+    $.ajax({
+        type:'GET',
+        url:'/getAllReceiver',
+        async: false,
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
+function getAllSendMailLog() {
+    var result;
+    $.ajax({
+        type:'GET',
+        url:'/getAllSendMailLog',
+        async: false,
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}

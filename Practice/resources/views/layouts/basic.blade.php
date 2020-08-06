@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href={{asset('css/app.css')}} rel='stylesheet'>
@@ -10,7 +11,7 @@
     </head>
     <body>
         @section('navbar')
-    <div class='container col-md-12'>
+    <div class='container col-md-12 no-gutters'>
         <div class="col-md-12 no-gutters">
             <nav class="navbar navbar-dark bg-dark">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">

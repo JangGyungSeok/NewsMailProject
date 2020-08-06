@@ -4,7 +4,7 @@
 @section('content')
     <div class='container col-md-12 no-gutters'>
         {{-- {{ json_encode($mailSendLog) }} --}}
-        <table class="table" id='receiversTable' data-all-receivers='{{ json_encode($allReceiver) }}'>
+        <table class="table" id='receiversTable'>
             {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>idx</th>
@@ -23,6 +23,7 @@
                 @endforeach
             </tbody>
         </table>
+
     </div>
 
     <div class='col-md-6 no-gutters'>

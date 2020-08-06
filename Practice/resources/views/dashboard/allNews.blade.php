@@ -1,10 +1,9 @@
 @extends('layouts.basic')
 
-<script src="{{ asset('js/dashboard.js') }}" defer></script>
 @section('content')
     <div class='container col-md-12 no-gutters'>
         {{-- {{ json_encode($mailSendLog) }} --}}
-        <table class="table" id='allNews' data-all-news='{{ json_encode($allNews) }}'>
+        <table class="table" id='allNews'>
             {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>idx</th>

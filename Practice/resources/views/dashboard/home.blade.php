@@ -2,10 +2,10 @@
 
 <script src="{{ asset('js/home.js') }}" defer></script>
 @section('content')
-    <div id='mailSendLogData' style='display:none'  data-mail-send-log='{{ json_encode($mailSendLog) }}'>
+    <div id='mailSendLogData' style='display:none'>
     </div>
 
-    <div id='allReceiversData' style='display:none'  data-all-receivers='{{ json_encode($allReceiver) }}'>
+    <div id='allReceiversData' style='display:none'>
     </div>
 
     <div class="row">
