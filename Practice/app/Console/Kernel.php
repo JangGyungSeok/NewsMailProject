@@ -38,11 +38,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('command:CrawlingSchedule')->at(date('H:i'));//at('09:00');
 
         // 10:00 ~ 24:00 메일발송 스케줄
-        $schedule->command('command:SendMailSchedule')->at(date('H:i'));//hourly();
+        // $schedule->command('command:SendMailSchedule')->at(date('H:i'));//hourly();
 
         // 24:00 메일발송시간 변경 스케줄
-        $schedule->command('command:SendReservationSchedule')->at('24:00');
-
+        // $schedule->command('command:SendReservationSchedule')->at(date('H:i'));
     }
 
     /**

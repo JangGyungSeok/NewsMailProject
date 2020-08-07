@@ -45,6 +45,10 @@ class TelegramService
             case 'NotReceiver':
                 $message = 'gateway에 알수없는 접근입니다.';
                 break;
+            // 사용자가 접근하려는 url이 이미 변경된경우
+            case 'NewsIsChanged':
+                $message = '사용자가 접근한 뉴스가 변경되어 삭제되었습니다.';
+                break;
             default:
                 $message = '알수없는 에러';
                 break;

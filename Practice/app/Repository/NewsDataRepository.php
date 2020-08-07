@@ -37,8 +37,6 @@ class NewsDataRepository
             ->get();
     }
 
-
-
     public function getMailContentByDate($news_date, $uid=0)
     {
         $emailContent = '<table class="table">
@@ -49,13 +47,14 @@ class NewsDataRepository
         foreach ($this->getNewsByDate($news_date) as $data) {
             $query = http_build_query(
                 array(
-                    'url' => $data->news_url,
+                    'idx' => $data->news_idx,
                     'uid' => $uid,
                     'mailDate' => date('Y-m-d')
                 ),
-                '&amp'
+                '&'
             );
             $emailContent = $emailContent.'<tr> <th> <a href="http://172.20.38.69/gateway?'.$query.'" target=_blank>'.$data->news_title.'</a></th></tr>';
+            // echo "test : ".$query;
         }
         $emailContent = $emailContent.'</tbody></table>';
 
@@ -77,10 +76,33 @@ class NewsDataRepository
             ->get();
     }
 
-    public function checkNews(){
+    public function getNewsByIdx($idx)
+    {
+        return $this->newsData
+            ->select('*')
+            ->where('news_idx',$idx)
+            ->get();
+    }
+
+    public function changeUrl($idx)
+    {
+        return $this->newsData
+            ->where('news_idx',$idx)
+            ->update(['news_url'=>'changed']);
+    }
+
+    public function checkNews()
+    {
         return $this->newsData
             ->where('news_date','>=',date('Y-m-d',strtotime('-7 days')))
             ->where('news_date','<',date('Y-m-d'))
             ->exists();
+    }
+
+    public function getAll()
+    {
+        return $this->newsData
+            ->orderBy('news_date','DESC')
+            ->paginate();
     }
 }

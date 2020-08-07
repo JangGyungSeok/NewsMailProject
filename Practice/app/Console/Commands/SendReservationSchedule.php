@@ -41,8 +41,8 @@ class SendReservationSchedule extends Command
      */
     public function handle()
     {
-        Log::info('메일발송시간 스케줄 시작!');
+        Log::info('메일발송시간변경 스케줄 시작!');
         $result = $this->sendReservationService->updateReservationTime();
-        Log::info('메일발송시간 스케줄 끝!');
+        Log::info('메일발송시간변경 스케줄 끝!');
     }
 }

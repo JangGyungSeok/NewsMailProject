@@ -2,18 +2,16 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
-class CustomException extends Exception
+class NewsIsChangedException extends Exception
 {
     protected $telegramService;
-    protected $situation;
 
-    public function __construct($situation)
+    public function __construct()
     {
-        $this->situation = $situation;
         $this->telegramService = new TelegramService;
     }
 
@@ -21,21 +19,17 @@ class CustomException extends Exception
     # 매개변수로 넘어온 situation 문자열에 따라 다른 메시지 발송
     public function report()
     {
-        Log::info($this->situation);
+        Log::info('변경 또는 삭제된 뉴스기사로 접근');
         $this->telegramMessage($this->situation);
     }
 
     public function render()
     {
-        if ($this->situation == 'NotReceiver') {
-            return '미확인 사용자';
-        } elseif ($this->situation == 'NewsIsChanged') {
-            return '뉴스기사가 변경 또는 삭제되었습니다.';
-        }
+        return '뉴스기사가 변경 또는 삭제되었습니다.';
     }
 
     public function telegramMessage($situation)
     {
-        $this->telegramService->message($situation);
+        $this->telegramService->message('NewsIsChanged');
     }
 }
