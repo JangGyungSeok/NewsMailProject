@@ -17,7 +17,7 @@ for(log in mailSendLogs){
 //  =============================================================================
 
 var receiversData = document.getElementById('allReceiversData');
-var receivers = getAllReceiver;
+var receivers = getAllReceiver();
 var receiversSendReservationTime = []
 
 for (i in receivers){

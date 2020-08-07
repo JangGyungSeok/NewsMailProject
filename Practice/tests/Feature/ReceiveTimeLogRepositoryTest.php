@@ -6,6 +6,7 @@ use App\ReceiveTimeLog;
 use App\Repository\ReceiveTimeLogRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class ReceiveTimeLogRepositoryTest extends TestCase
@@ -24,21 +25,25 @@ class ReceiveTimeLogRepositoryTest extends TestCase
     public function testInsertLog()
     {
         $this->initData();
+        Log::info('ReceiveTimeLogRepository -> insertLog(uid,mail_date) 테스트 시작');
         $this->assertNotNull(
             $this->receiveTimeLogRepository->insertLog(
                 $this->uid, $this->mail_date
             )
         );
+        Log::info('ReceiveTimeLogRepository -> insertLog(uid,mail_date) 테스트 끝');
     }
 
     public function testGetLogByMailDate()
     {
         $this->initData();
+        Log::info('ReceiveTimeLogRepository -> getLogByMailDate(mail_date) 테스트 시작');
         $this->assertNotNull(
-            $this->receiveTimeLogRepository->getLogBymailDate(
+            $this->receiveTimeLogRepository->getLogByMailDate(
                 $this->mail_date
             )
         );
+        Log::info('ReceiveTimeLogRepository -> getLogByMailDate(mail_date) 테스트 끝');
     }
 
     // public function testGetReceiverFavoriteTime()

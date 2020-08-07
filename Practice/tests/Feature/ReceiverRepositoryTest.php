@@ -6,6 +6,7 @@ use App\Receiver;
 use App\Repository\ReceiverRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class ReceiverRepositoryTest extends TestCase
@@ -24,13 +25,17 @@ class ReceiverRepositoryTest extends TestCase
     public function testIsReceiver()
     {
         $this->initData();
+        Log::info('ReceiverRepository -> isReceiver(uid) 테스트 시작');
         $this->assertNotNull($this->receiverRepository->isReceiver($this->uid));
+        Log::info('ReceiverRepository -> isReceiver(uid) 테스트 끝');
     }
 
     public function testGetFavoriteTime()
     {
         $this->initData();
+        Log::info('ReceiverRepository -> getFavoriteTime() 테스트 시작');
         $this->assertNotNull($this->receiverRepository->getFavoriteTime());
+        Log::info('ReceiverRepository -> getFavoriteTime() 테스트 끝');
     }
 
     // public function testUpdateReservationTime()
@@ -42,7 +47,9 @@ class ReceiverRepositoryTest extends TestCase
     public function testGetAll()
     {
         $this->initData();
+        Log::info('ReceiverRepository -> getAll() 테스트 시작');
         $this->assertNotNull($this->receiverRepository->getAll());
+        Log::info('ReceiverRepository -> getAll() 테스트 끝');
     }
 }
 // public function isReceiver($uid)

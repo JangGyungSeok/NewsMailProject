@@ -30,15 +30,8 @@ class DashBoardService
 
     public function home()
     {
-        $mailSendLog = $this->mailSendLogRepository->getLogTableContent();
-        $allReceiver = $this->receiverRepository->getAll();
-
         return view(
-            '/dashboard/home',
-            [
-                'mailSendLog' => $mailSendLog,
-                'allReceiver' => $allReceiver
-            ]
+            '/dashboard/home'
         );
     }
 
