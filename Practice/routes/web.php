@@ -30,3 +30,9 @@ Route::get('/getAllReceiver', 'AjaxController@getAllReceiver');
 Route::get('/getReceiverBySendReservationTime', 'AjaxController@getReceiverBySendReservationTime');
 Route::get('/getAllSendMailLog', 'AjaxController@getAllSendMailLog');
 Route::get('/getSendMailLogByMailDate', 'AjaxController@getSendMailLogByMailDate');
+
+
+
+Route::get('/test', function () {
+    return view('/dashboard/test');
+});

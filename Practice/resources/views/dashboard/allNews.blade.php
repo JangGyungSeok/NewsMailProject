@@ -1,9 +1,9 @@
-@extends('layouts.basic')
+@extends('layouts.basicArchitecture')
 
 @section('content')
     <div class='container col-md-12 no-gutters'>
         {{-- {{ json_encode($mailSendLog) }} --}}
-        <table class="table" id='allNews'>
+        <table class="table table-hover" id='allNews'>
             {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>idx</th>

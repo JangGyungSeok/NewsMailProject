@@ -1,10 +1,10 @@
-@extends('layouts.basic')
+@extends('layouts.basicArchitecture')
 
 <script src="{{ asset('js/receivers.js') }}" defer></script>
 @section('content')
-    <div class='container col-md-12 no-gutters'>
+    <div class='row no-gutters'>
         {{-- {{ json_encode($mailSendLog) }} --}}
-        <table class="table" id='receiversTable'>
+        <table class="table table-hover" id='receiversTable'>
             {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>idx</th>
@@ -26,7 +26,7 @@
 
     </div>
 
-    <div class='col-md-6 no-gutters'>
+    <div class='row no-gutters'>
         <canvas id='receiversChart'>
         </canvas>
     </div>

@@ -1,10 +1,10 @@
-@extends('layouts.basic')
+@extends('layouts.basicArchitecture')
 
 <script src="{{ asset('js/dashboard.js') }}" defer></script>
 @section('content')
-    <div class='container col-md-12 no-gutters'>
+    <div class='row no-gutters'>
         {{-- {{ json_encode($mailSendLog) }} --}}
-        <table class="table" id='mailSendLogTable'>
+        <table class="table table-hover" id='mailSendLogTable'>
             {{-- {{ $mailSendLog }} --}}
             <thead class='thead-dark'>
                 <th scope='col'>발송일</th>
@@ -15,7 +15,7 @@
             </thead>
             <tbody id='mailSendLogTableBody'>
                 @foreach ($mailSendLog as $log)
-                    <tr>
+                    <tr onClick ="location.href='/dashBoard/mailSendLog/mailSendLogDetail/{{$log->mail_date}}'">
                         <th> {{$log->mail_date}} </th>
                         <td> <a href='/dashBoard/mailSendLog/mailSendLogDetail/{{$log->mail_date}}'>상세보기</a> </td>
                         <td> {{$log->total_send}} </td>
@@ -26,7 +26,7 @@
             </tbody>
         </table>
     </div>
-    <div class='col-md-6 no-gutters'>
+    <div class='row no-gutters'>
         <canvas id='mailSendLogChart'>
 
         </canvas>

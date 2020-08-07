@@ -1,4 +1,4 @@
-@extends('layouts.basic')
+@extends('layouts.basicArchitecture')
 {{-- <script src="{{ asset('js/mailSendLogDetail.js') }}" defer></script> --}}
 
 @section('content')
@@ -10,7 +10,7 @@
         </div>
         <div class='col-6 no-gutters'>
             {{-- {{ $receiveTimeLogDetail }} --}}
-            <table class="table" name='mailSendLog'>
+            <table class="table table-hover" name='mailSendLog'>
                 <thead class='thead-dark'>
                     <th scope='col'>메일날짜</th>
                     <th scope='col'>uid</th>
