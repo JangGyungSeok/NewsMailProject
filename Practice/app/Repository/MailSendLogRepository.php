@@ -45,4 +45,27 @@ class MailSendLogRepository
 
         return $logTable;
     }
+
+    public function getSendMailLogByMailDate($mailDate)
+    {
+        // 발송날짜를 기준으로 group by
+        // 각 날짜별 발송성공, 실패 보여줌
+        // 내 로직 특성 상 오늘 이전 데이터만 보여줘야함
+        $logTable = $this->mailSendLog
+            ->select(
+                DB::raw("date_format(send_time, '%Y-%m-%d') as mail_date"),
+                DB::raw('count(uid) as total_send'),
+                DB::raw('COUNT(if(is_success=1,is_success,null)) as send_success'),
+                DB::raw('COUNT(if(is_success=0,is_success,null)) as send_fail')
+            )
+            ->where(
+                DB::raw("date_format(send_time, '%Y-%m-%d')"),
+                $mailDate
+            )
+            ->groupBy('mail_date')
+            ->orderBy('mail_date','DESC')
+            ->get();
+
+        return $logTable;
+    }
 }

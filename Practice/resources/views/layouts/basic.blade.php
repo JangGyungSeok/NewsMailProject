@@ -4,8 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href={{asset('css/app.css')}} rel='stylesheet'>
+        <link href={{asset('css/custom.css')}} rel='stylesheet'>
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
     <body>
         @section('navbar')
@@ -24,10 +26,13 @@
                         <a class='bg-dark text-white h5 nav-link' href='/dashBoard'>home </a>
                     </li>
                     <li>
-                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard'>링크1 </a>
+                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard/allNews'>전체뉴스 </a>
                     </li>
                     <li>
-                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard'>링크2 </a>
+                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard/mailSendLog'>메일발송현황 </a>
+                    </li>
+                    <li>
+                        <a class='bg-dark text-white h5 nav-link' href='/dashBoard/receivers'>사용자 정보 </a>
                     </li>
                 </div>
             </div>

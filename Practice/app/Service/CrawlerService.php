@@ -2,12 +2,23 @@
 
 namespace App\Service;
 
+use App\Exceptions\crawlingURLFailException;
+use App\Exceptions\CustomException;
+use App\Exceptions\NoContentException;
+use App\Exceptions\NotGoodCSSSelectorException;
+use InvalidArgumentException;
+use RuntimeException;
+use Symfony\Component\HttpClient\Exception\TransportException;
+use Illuminate\Contracts\Container\BindingResolutionException;
+
 use Goutte\Client;
 use Illuminate\Support\Facades\Log;
-use App\Exceptions\CustomException;
 use App\Repository\NewsDataRepository;
+use Illuminate\Container\Container;
+
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpClient\Exception\TransportException;
+
+
 
 class CrawlerService
 {
@@ -15,10 +26,12 @@ class CrawlerService
 
     public function __construct(NewsDataRepository $newsDataRepository)
     {
+        // $container = Container::getInstance();
         $this->newsDataRepository = $newsDataRepository;
+        // $container->make(NewsDataRepository::class);
     }
 
-    public function CrawlingNews()
+    public function crawlingNews()
     {
         $client = new Client();
         $page = 1;
@@ -38,7 +51,7 @@ class CrawlerService
 
                 if ($links->text() == null) {
                     Log::info('CSS Selector는 있으나 비어있음');
-                    throw new CustomException('NoContent');
+                    throw new NoContentException();
                 }
 
                 foreach ($links as $link) {
@@ -52,7 +65,9 @@ class CrawlerService
                     $newsDate = explode("|", $temp->filter('div.list-dated')->text())[2];
                     $newsDate = explode(' ', $newsDate)[1];
 
+
                     if (strtotime($newsDate) == strtotime(date('Y-m-d', strtotime('-1 days')))) {
+                        // Log::info('뉴스날짜',['left'=>strtotime($newsDate),'right'=>strtotime(date('2020-07-24', strtotime('-1 days')))]);
                         $count++;
                         // 기사 제목, URL 크롤링
                         $temp_title = $temp->filter('div.list-titles > a > strong')->text();
@@ -60,6 +75,7 @@ class CrawlerService
 
                         //DB 적재로직 실행
 
+                        // Log::info(['날짜 '=>$newsDate,'제목'=>$temp_title,'url'=>$temp_url]);
                         $this->newsDataRepository
                             ->insertNews(
                                 array(
@@ -88,11 +104,14 @@ class CrawlerService
                 // url이 비정상인경우 발생
                 if ($e instanceof TransportException) {
                     Log::info('URL경로가 잘못되었습니다.');
-                    throw new CustomException('CrawlingURLFail');
-                } elseif ($e instanceof \RuntimeException) {
-                    throw new CustomException('NotGoodCssSelector');
+                    throw new CrawlingURLFailException();
+                } elseif ($e instanceof InvalidArgumentException) {
+                    throw new NotGoodCSSSelectorException();
+                } elseif ($e instanceof RuntimeException) {
+                    throw report($e);
                 }
-                throw new CustomException('ChangedArchitecture');
+                throw $e;
+                return false;
             } //catch
         } //while
     }

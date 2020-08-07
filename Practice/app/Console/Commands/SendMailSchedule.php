@@ -60,6 +60,7 @@ class SendMailSchedule extends Command
 
         // 오늘자 크롤링한 뉴스가 없다면 실행하지 않는다.
         if ($this->newsDataRepository->checkNews()) {
+        // if (true) {
             // 크롤링할 뉴스가 있다면 사용자 정보를 불러온다.
             $receiverData = $this->receiverRepository->getAll();
 
@@ -67,8 +68,8 @@ class SendMailSchedule extends Command
             // 단 현재시간이 메일발송예약시간이 아니라면 발송하지 않는다.
             foreach ($receiverData as $data) {
                 Log::info('시간정보',['현재시간대'=>date('H:i:00'),'선호시간대'=>$data->send_reservation_time]);
-                if (date("H:i:00") == $data->send_reservation_time) {
-                // if(true){
+                // if (date("H:00:00") == $data->send_reservation_time) {
+                if(true){
                     Log::info('메일발송 스케줄 실행!',['id' => $data->idx]);
                     $this->sendMailService->sendMail($data);
                     Log::info('메일발송 스케줄 종료');
