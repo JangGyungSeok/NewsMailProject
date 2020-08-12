@@ -6,6 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+// 메일발송 중 알수없는 예외
 class MailFailException extends Exception
 {
     protected $telegramService;

@@ -6,6 +6,8 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+
+// 크롤링에 성공했으나 텍스트가 비어있는경우
 class NoContentException extends Exception
 {
     protected $telegramService;

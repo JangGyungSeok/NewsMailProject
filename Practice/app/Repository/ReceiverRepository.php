@@ -14,6 +14,7 @@ class ReceiverRepository
         $this->receiver = $receiver;
     }
 
+    // 사용자 판별
     public function isReceiver($uid)
     {
         return $this->receiver
@@ -22,11 +23,13 @@ class ReceiverRepository
             ->exists();
     }
 
+    // 수신자 선호시간 조회
     public function getFavoriteTime()
     {
         return $this->receiver->select('*')->get();
     }
 
+    // 수신자 메일발송시간 변경
     public function updateReservationTime($uid, $favoriteTime)
     {
         // $this->receiver->
@@ -36,12 +39,14 @@ class ReceiverRepository
 
     }
 
+    // 수신자 정보 전체조회
     public function getAll()
     {
         return $this->receiver->get();
     }
 
 
+    // 수신자 정보 선호시간별 조회
     public function getReceiverBySendReservationTime($data)
     {
         return $this->receiver->select('*')->where('send_reservation_time',$data)->get();

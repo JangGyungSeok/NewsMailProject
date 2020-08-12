@@ -6,6 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+// 변경 또는 삭제된 뉴스기사로 접근한경우
 class NewsIsChangedException extends Exception
 {
     protected $telegramService;

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Container\Container;
 
+// 정의되지 않은 CSS selector를 사용한경우
 class NotGoodCSSSelectorException extends Exception
 {
     protected $telegramService;

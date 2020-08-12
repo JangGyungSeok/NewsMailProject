@@ -5,11 +5,14 @@ namespace App\Service;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
+// 텔레그램 연결정보
 define('BOT_TOKEN',env('TELEGRAM_BOT_TOKEN'));
 define('API_URL','http://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 class TelegramService
 {
+
+    // 텔레그램 메시지 발송 상황
     public function getMessageContent($situation)
     {
         switch($situation){
@@ -56,10 +59,12 @@ class TelegramService
         return $message;
     }
 
+    // 텔레그램 메시지 발송
     public function message($situation)
     {
         $message = $this->getMessageContent($situation);
 
+        // GuzzleHttp 사용 http메서드 실행
         $client = new Client(['base_uri'=>API_URL, 'verify'=>false]);
 
         $response = $client->post(

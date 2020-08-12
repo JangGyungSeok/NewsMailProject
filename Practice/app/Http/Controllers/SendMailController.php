@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Service\SendMailService;
-use App\Service\TelegramService;
 
 class SendMailController extends Controller
 {
     private $mailSendService;
-    private $telegramService;
 
     public function __construct(
-        SendMailService $sendMailService,
-        TelegramService $telegramService
+        SendMailService $sendMailService
     ) {
         $this->mailSendService = $sendMailService;
-        $this->telegramService = $telegramService;
     }
 
     // 메일발송 메서드 실행

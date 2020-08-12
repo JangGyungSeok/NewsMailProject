@@ -16,6 +16,7 @@ class NewsDataRepository
         $this->newsData = $newsData;
     }
 
+    // 사람인 기사 적재
     public function insertNews($data)
     {
         return $this->newsData->insert(
@@ -28,6 +29,7 @@ class NewsDataRepository
 
     }
 
+    // 일주일 간 기사 조회
     public function getNews()
     {
         // 오늘 기준 일주일동안의 news select
@@ -37,6 +39,7 @@ class NewsDataRepository
             ->get();
     }
 
+    // 날짜별 메일 컨텐츠 조회
     public function getMailContentByDate($news_date, $uid=0)
     {
         $emailContent = '<table class="table">
@@ -62,6 +65,7 @@ class NewsDataRepository
         return $emailContent;
     }
 
+    // 날짜별 뉴스 조회
     public function getNewsByDate($news_date)
     {
         // Log::info(date($news_date, strtotime('-7 days')));
@@ -76,6 +80,7 @@ class NewsDataRepository
             ->get();
     }
 
+    // idx별 뉴스 조회
     public function getNewsByIdx($idx)
     {
         return $this->newsData
@@ -84,6 +89,7 @@ class NewsDataRepository
             ->get();
     }
 
+    // 변경, 삭제 기사 접근 시 changed로 변경로직
     public function changeUrl($idx)
     {
         return $this->newsData
@@ -91,6 +97,7 @@ class NewsDataRepository
             ->update(['news_url'=>'changed']);
     }
 
+    // 최근 일주일 기사 확인
     public function checkNews()
     {
         return $this->newsData
@@ -99,6 +106,7 @@ class NewsDataRepository
             ->exists();
     }
 
+    // 기사 전체조회
     public function getAll()
     {
         return $this->newsData

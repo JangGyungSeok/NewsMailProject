@@ -41,6 +41,7 @@ class GatewayService
         # redirect 전 뉴스기사 페이지의 title을 받아온다.
         # 또한 DB의 title과 페이지의 title을 비교해 변경을 확인한다.
         try {
+            // Goutte로 유입할 url을 먼저 판별
             $client = new Client();
             $crawler = $client->request('GET',$url);
             $title = $crawler->filter('#user-container > div.float-center.max-width-1080 > header > div > div')->text();
@@ -70,6 +71,7 @@ class GatewayService
         $newsData = $this->newsDataRepository->getNewsByIdx($idx);
         $url = $newsData[0]->news_url;
 
+        // 뉴스기사가 changed로 변경되었을 경우
         if ($url == 'changed') {
             return '뉴스기사가 변경 또는 삭제되었습니다.';
         }

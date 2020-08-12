@@ -6,6 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+// API는 정상동작하나 메일발송이 실패한경우
 class MailSendFailException extends Exception
 {
     protected $telegramService;

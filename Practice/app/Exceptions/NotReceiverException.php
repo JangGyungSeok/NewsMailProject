@@ -6,6 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+// 수신자 정보 테이블에 없는 접근
 class NotReceiverException extends Exception
 {
     protected $telegramService;

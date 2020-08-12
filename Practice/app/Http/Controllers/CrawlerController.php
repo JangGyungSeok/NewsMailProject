@@ -9,14 +9,11 @@ use App\Service\TelegramService;
 class CrawlerController extends Controller
 {
     private $crawlerService;
-    private $telegramService;
 
     public function __construct(
-        CrawlerService $crawlerService,
-        TelegramService $telegramService
+        CrawlerService $crawlerService
     ) {
         $this->crawlerService = $crawlerService;
-        $this->telegramService = $telegramService;
     }
 
     public function crawlingNews()

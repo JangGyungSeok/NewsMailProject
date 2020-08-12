@@ -33,6 +33,7 @@ class CrawlerService
 
     public function crawlingNews()
     {
+        // Goutte 클라이언트
         $client = new Client();
         $page = 1;
         $count = 0;
@@ -46,6 +47,7 @@ class CrawlerService
 
                 $crawler = $client->request('GET',$url);
 
+                // 기사 컨텐츠 테이블 선택
                 $links = $crawler
                     ->filter('#user-container > div.float-center.max-width-1080 > div.user-content > section > article > div.article-list > section > div.list-block');
 
@@ -54,11 +56,13 @@ class CrawlerService
                     throw new NoContentException();
                 }
 
+                // 기사 테이블 행별로 foreach
                 foreach ($links as $link) {
-                    if ($count == 100) {
+                    if ($count == 10) {
                             Log::info('10개의 기사 크롤링 완료');
                             return true;
                     }
+                    // Goutte가 내부적으로 DomCrawler로 이루어져있음
                     $temp = new Crawler($link);
 
                     // 크롤링할 기사 날짜 확인
@@ -84,7 +88,7 @@ class CrawlerService
                                     $temp_url,
                                 )
                             );
-
+                            // 뉴스기사가 내림차순으로 정렬되므로 어제일자보다 최신인경우 continue
                     } elseif (strtotime($newsDate) >= strtotime(date('Y-m-d'))) {
                         continue;
                     } else {

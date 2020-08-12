@@ -6,6 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+// 크롤링 URL이 잘못된경우
 class CrawlingURLFailException extends Exception
 {
     protected $telegramService;

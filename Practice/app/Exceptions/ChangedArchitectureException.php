@@ -6,6 +6,7 @@ use App\Service\TelegramService;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+// 크롤링 할 페이지 구조 변경
 class ChangedArchitectureException extends Exception
 {
     protected $telegramService;

@@ -16,6 +16,7 @@ class MailSendLogRepository
         $this->mailSendLog = $mailSendLog;
     }
 
+    // 메일 발송 로그 적재
     public function insertLog($uid, $isSuccess)
     {
         return $this->mailSendLog->insert(
@@ -27,6 +28,7 @@ class MailSendLogRepository
         );
     }
 
+    // 메일발송 로그 데이터 조회
     public function getLogTableContent()
     {
         // 발송날짜를 기준으로 group by
@@ -46,6 +48,7 @@ class MailSendLogRepository
         return $logTable;
     }
 
+    // 날짜별 메일발송로그 조회
     public function getSendMailLogByMailDate($mailDate)
     {
         // 발송날짜를 기준으로 group by

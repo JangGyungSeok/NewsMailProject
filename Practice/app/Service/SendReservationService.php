@@ -21,14 +21,12 @@ class SendReservationService
 
     public function updateReservationTime()
     {
-        // $receivers = $this->receiverRepository->getAll();
 
-        // foreach($receivers as $receiver){
-
-        // }
-
+        // 어제자 최다유입시간 조회
         $favoriteTimes = $this->receiveTimeLogRepository->getReceiverFavoriteTime();
         Log::info($favoriteTimes);
+
+        // 어제자 유입시간이 없을경우 미실행
         if (!($favoriteTimes->isEmpty())) {
             foreach ($favoriteTimes as $data) {
                 if ($this->receiverRepository->isReceiver($data->uid) && $data->enter_hour != null) {

@@ -28,6 +28,7 @@ class DashBoardService
         $this->receiverRepository = $receiverRepository;
     }
 
+    // 대시보드 메인
     public function home()
     {
         return view(
@@ -35,6 +36,7 @@ class DashBoardService
         );
     }
 
+    // 메일발송 로그 페이지
     public function mailSendLog()
     {
         $mailSendLog = $this->mailSendLogRepository->getLogTableContent();
@@ -46,6 +48,7 @@ class DashBoardService
         );
     }
 
+    // 메일발송 로그 상세 페이지
     public function mailSendLogDetail($mail_date)
     {
         $mailContent = $this->newsDataRepository->getMailContentByDate($mail_date);
@@ -60,6 +63,7 @@ class DashBoardService
         );
     }
 
+    // 크롤링 기사 조회 페이지
     public function allNews(){
         $allNews = $this->newsDataRepository->getAll();
 
@@ -71,6 +75,7 @@ class DashBoardService
         );
     }
 
+    // 사용자 조회 페이지
     public function allReceiver(){
         $allReceiver = $this->receiverRepository->getAll();
 

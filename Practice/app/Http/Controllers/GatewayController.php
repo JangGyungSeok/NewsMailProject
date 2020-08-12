@@ -11,16 +11,14 @@ class GatewayController extends Controller
 {
 
     private $gatewayService;
-    private $telegramService;
 
     public function __construct(
-        GatewayService $gatewayService,
-        TelegramService $telegramService
+        GatewayService $gatewayService
     ) {
         $this->gatewayService = $gatewayService;
-        $this->telegramService = $telegramService;
     }
 
+    // 게이트웨이 접근 Service로직 호출
     public function enterGateway(Request $request)
     {
         $result = $this->gatewayService->enterGateway($request);

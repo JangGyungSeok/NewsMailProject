@@ -15,6 +15,7 @@ class ReceiveTimeLogRepository
         $this->receiveTimeLog = $receiveTimeLog;
     }
 
+    // 수신자 메일접근시간 적재
     public function insertLog($uid, $mailDate)
     {
         return $this->receiveTimeLog->insert(
@@ -26,6 +27,7 @@ class ReceiveTimeLogRepository
         );
     }
 
+    // 메일 날짜별 수신자 유입정보 조회
     public function getLogByMailDate($mail_date)
     {
         return $this->receiveTimeLog
@@ -36,6 +38,7 @@ class ReceiveTimeLogRepository
             ->get();
     }
 
+    // 전날 최다유입시간 조회
     public function getReceiverFavoriteTime()
     {
         return DB::table('receive_time_logs AS A')
